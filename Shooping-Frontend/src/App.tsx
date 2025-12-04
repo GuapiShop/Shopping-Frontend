@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
 
-import Authpage from './components/pages/AuthPage'
-import AddProductPage from './components/pages/AddProductPage'
-import EditProductPage from './components/pages/EditProductPage'
-import ListProduct from './components/pages/ListProduct'
-import AddUserPage from './components/pages/AddUserPage'
-import ListUsersPage from './components/pages/ListUsersPage'
+import Authpage from './components/pages/authPage'
+import AddProductPage from './components/pages/addProductPage'
+import EditProductPage from './components/pages/editProductPage'
+import ListProduct from './components/pages/listProduct'
+import AddUserPage from './components/pages/addUserPage'
+import ListUsersPage from './components/pages/listUsersPage'
 
 /*
 * react-router-dom

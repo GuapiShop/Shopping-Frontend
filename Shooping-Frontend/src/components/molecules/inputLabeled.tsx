@@ -20,18 +20,15 @@ const InputLabeled: React.FC<InputLabeledProps> = ({
     inputName,
     inputOnChange, 
     labelText, 
-    labelColor, 
     errorMessage
  }) => {
     return (
         <>
             <div
-                className="inputLabeled"
+                className="mb-4"
             >
-                <Label 
-                    text={labelText} 
-                    color={labelColor} 
-                />
+                <Label text={labelText} />
+
                 <Input 
                     type={inputType} 
                     value={inputValue}

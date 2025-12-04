@@ -15,9 +15,9 @@ const Input: React.FC<InputProps> = ({ value, type, placeholder, onChange, name 
                 type= {type}
                 name={name}
                 placeholder={placeholder} 
-                className=""
-                value={value}
+                value={value}   
                 onChange={onChange}
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-black-600 rounded"
             />
         </>
     );

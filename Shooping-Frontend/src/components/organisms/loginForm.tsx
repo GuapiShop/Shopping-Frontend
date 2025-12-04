@@ -1,5 +1,6 @@
 import type React from "react";
 import InputLabeled from "../molecules/inputLabeled";
+import Link from "../atoms/link";
 import { useState } from "react";
 import type { Auth } from "../../models/Auth";
 import Button from "../atoms/button";
@@ -8,13 +9,8 @@ import HeadingOne from "../atoms/headingOne";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-type LoginFormProps = {
-    classNameBtn: string;
-}
+const LoginForm: React.FC = () => {
 
-const LoginForm: React.FC<LoginFormProps> = ({
-    classNameBtn
-}) => {
     const navigate = useNavigate();
 
     const [credentials, setCredentials] = useState<Auth>({
@@ -45,10 +41,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
         }
     }
 
-    function redirect () {
-        navigate('user/add');
-    }
-
     function redirectMenuPage () {
         navigate('product/')
     }
@@ -56,12 +48,14 @@ const LoginForm: React.FC<LoginFormProps> = ({
     return(
         <>
             <div
-                className="card-form"
+                className="rounded shadow-lg px-8 py-8 size-w-full max-w-md mx-auto mt-20 bg-white"
             >
                 <HeadingOne 
-                    className="" 
+                    className="font-bold mb-4 text-center text-" 
                     label="Sign In"
                 />
+
+                {/* Email */}
                 <InputLabeled
                     labelText="Email"
                     inputType="text"
@@ -70,6 +64,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     inputValue={credentials.email}
                     inputOnChange={(e)=>onChangeFields(e)}
                 />
+
+                {/* Password */}
                 <InputLabeled
                     labelText="Password"
                     inputType="password"
@@ -78,16 +74,25 @@ const LoginForm: React.FC<LoginFormProps> = ({
                     inputValue={credentials.password}
                     inputOnChange={onChangeFields}
                 />
+
+                <div className="md:flex md:items-center justify-between mb-3">
+                    {/* Link to recuperate user */}
+                    <div className="mb-4">
+                        Forgot&nbsp;
+                        <Link label="password" link="/user/recuperation"/>
+                        ?
+                    </div>
+                    
+                    {/* Link to create user */}
+                    <div className="mb-4">
+                        Don’t have an account?&nbsp;
+                        <Link label="Sign Up" link="/user/add"/>
+                    </div>
+                </div>
+
                 <Button 
-                    label="Create account"
+                    label="Log In"
                     color="blue"
-                    className={classNameBtn}
-                    onClick={redirect}
-                />
-                <Button 
-                    label="Login"
-                    color="blue"
-                    className={classNameBtn}
                     onClick={logIn}
                 />
             </div>

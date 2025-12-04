@@ -2,18 +2,14 @@ import type React from "react";
 
 type ParagraphProps = {
     paragraph: string;
-    className: string;
 }
 
 const Paragraph: React.FC<ParagraphProps> = ({
-    paragraph, 
-    className
+    paragraph
 }) => {
     return (
         <>
-            <p 
-                className={className}
-            >
+            <p>
                 {paragraph}
             </p>
         </>

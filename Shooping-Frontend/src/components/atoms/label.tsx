@@ -2,19 +2,14 @@ import React from "react";
 
 type LabelProps = {
     text: string;
-    color?: string;
 };
 
 const Label: React.FC<LabelProps> = ({ 
     text, 
-    color 
 }) => {
     return (
         <>
-            <label 
-                color={color}
-                className=""
-            >
+            <label className="block font-bold md:text-left mb-1 md:mb-0 pr-4">
                 {text}
             </label>
         </>
