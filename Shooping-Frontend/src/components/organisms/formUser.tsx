@@ -1,100 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../atoms/button";
 import InputLabeled from "../molecules/inputLabeled";
-import type { ErrorUserDTO, UserCreateDTO } from "../../models/User";
-import { createUser } from "../../services/userService";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useFormUser } from "../../utils/useFormUser";
 
-type FormUserProps = {
-    classNameBtn: string
-}
-
-const FormUser: React.FC<FormUserProps> = ({
-    classNameBtn
-}) => {
-
-    const navigate = useNavigate();
-
-    const [data, setData] =  useState <UserCreateDTO> ({
-        username: '',
-        email: '', 
-        password: '' 
-    })
-
-    const [error, setError] = useState <ErrorUserDTO> ({
-        username: '', 
-        email: '', 
-        password: ''
-    })
-
-    const onChangeFields = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;   
-
-        setData((prev) => ({
-            ...prev, 
-            [name]: value
-        }));
-    }
-
-    async function saveUser () {
-        let result = await createUser(data);
-
-        if(result.success){
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "User created",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            redirect();
-        }else{
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Error",
-                html: `${result.data.title}`,
-                showConfirmButton: false,
-                timer: 1500
-            });
-            
-            setError({
-                email: result.data.errors.Email?.[0], 
-                password: result.data.errors.Password?.[0], 
-                username: result.data.errors.Username?.[0]
-            })
-        }
-    }
-
-    function redirect () {
-        navigate('/');
-    }
-
-    const fields = [
-        {
-            label: "Username",
-            name: "username",
-            placeholder: "Username",
-            value: data.username,
-            type: "text", 
-            error: error.username
-        }, {
-            label: "Email",
-            name: "email",
-            placeholder: "Email",
-            value: data.email,
-            type: "text", 
-            error: error.email
-        },  {
-            label: "Password",
-            name: "password",
-            placeholder: "Password",
-            value: data.password,
-            type: "password", 
-            error: error.password
-        }
-    ];
+const FormUser: React.FC = () => {
+    const {
+        fields,
+        onChangeFields,
+        saveUser,
+        redirect
+    } = useFormUser();
 
     return (
         <>
@@ -112,18 +27,18 @@ const FormUser: React.FC<FormUserProps> = ({
                 />
             </>
             ))}
-            <Button 
-                label="Cancel"
-                color="blue"
-                className={classNameBtn}
-                onClick={redirect}
-            />
-            <Button 
-                label="Guardar"
-                color="blue"
-                className={classNameBtn}
-                onClick={saveUser}
-            />
+            <div className="felx space-x-4 mt-4">
+                <Button 
+                    label="Cancel"
+                    color="blue"
+                    onClick={redirect}
+                />
+                <Button 
+                    label="Guardar"
+                    color="blue"
+                    onClick={saveUser}
+                />
+            </div>
         </>
     );
 }

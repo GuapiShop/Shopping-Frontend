@@ -2,17 +2,15 @@ import React from "react";
 
 type HeadingProps = {
     label: string;
-    className: string;
 }
 
 const HeadingTwo: React.FC<HeadingProps> = ({ 
-    label, 
-    className 
+    label 
 }) => {
     return (
         <>
             <h1 
-                className={className}
+                className="font-bold mb-4 text-center"
             >
                 {label}
             </h1>

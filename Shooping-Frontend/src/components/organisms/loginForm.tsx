@@ -51,7 +51,6 @@ const LoginForm: React.FC = () => {
                 className="rounded shadow-lg px-8 py-8 size-w-full max-w-md mx-auto mt-20 bg-white"
             >
                 <HeadingOne 
-                    className="font-bold mb-4 text-center text-" 
                     label="Sign In"
                 />
 
