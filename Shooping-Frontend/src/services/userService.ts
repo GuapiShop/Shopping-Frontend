@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { User, UserCreateDTO } from "../models/User";
 
-const apiUser = "https://localhost:7176/api/Users/";
+const apiUser = "https://localhost:7176/api/Users";
 
 /*
 * endpoint create a user
@@ -12,7 +12,7 @@ export async function createUser( user: UserCreateDTO ){
         const result = await axios.post( apiUser, user, {
             headers: {
                 'Content-Type': 'application/json'
-             }
+            }
         });
         return {
             data: result.data, 

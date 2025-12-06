@@ -4,6 +4,7 @@ import InputLabeled from "../molecules/inputLabeled";
 import { useFormUser } from "../../utils/useFormUser";
 
 const FormUser: React.FC = () => {
+
     const {
         fields,
         onChangeFields,
@@ -16,6 +17,7 @@ const FormUser: React.FC = () => {
             {fields.map((field) => (
             <>
                 <InputLabeled
+                    key={field.name}
                     labelText={field.label}
                     labelColor="black"
                     inputName={field.name}

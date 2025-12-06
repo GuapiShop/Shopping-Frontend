@@ -30,17 +30,19 @@ const InputLabeled: React.FC<InputLabeledProps> = ({
                 <Label text={labelText} />
 
                 <Input 
+                    name={inputName}
                     type={inputType} 
                     value={inputValue}
-                    name={inputName}
                     placeholder={inputPlaceHolder} 
                     onChange={inputOnChange}
                 /> 
+                <div className="flex justify-start"> 
                 {(errorMessage) && 
                     <ErrorMessage 
                         message={errorMessage}
                     />
                 }
+                </div>
             </div>
         </>
     );
