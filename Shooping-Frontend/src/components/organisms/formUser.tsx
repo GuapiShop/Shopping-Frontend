@@ -9,7 +9,8 @@ const FormUser: React.FC = () => {
         fields,
         onChangeFields,
         saveUser,
-        redirect
+        redirect, 
+        isBtnSaveActive
     } = useFormUser();
 
     return (
@@ -38,6 +39,7 @@ const FormUser: React.FC = () => {
                 <Button 
                     label="Guardar"
                     color="blue"
+                    disabled={!isBtnSaveActive}
                     onClick={saveUser}
                 />
             </div>

@@ -20,7 +20,7 @@ const Link: React.FC<LinkProps> = ({
     return (
         <>
             <a 
-                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+                className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 hover:cursor-pointer"
                 onClick={handleClickLink}
             >
                 {label}

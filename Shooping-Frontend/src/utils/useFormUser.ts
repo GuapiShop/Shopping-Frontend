@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import type { ErrorUserDTO, UserCreateDTO } from "../models/User";
@@ -7,9 +7,8 @@ import { validateEmptyField } from "./generalValidations";
 import { validateUsername, validateEmail, validatePassword } from "./validateFormUser";
 
 export function useFormUser() {
-    
     const navigate = useNavigate();
-    const [isBtnSaveActive, setIsBtnSaveActuve] = useState<boolean>(false);
+    const [isBtnSaveActive, setIsBtnSaveActive] = useState<boolean>(false);
 
     const [data, setData] =  useState <UserCreateDTO> ({
         username: '',
@@ -48,32 +47,32 @@ export function useFormUser() {
         }
     ];
 
-    const onChangeFields = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;   
+    function redirect () {
+        navigate('/');
+    }
 
-        // Validation for create a user
-        if (name === "email" && !validateEmail(value)) {
+    function fieldsValidations( name: string, value: string ) {
+        if (name === "email") {
             setError((prev) => ({
                 ...prev,
-                email: 'This is not a valid email address'
+                email: validateEmptyField(value) || validateEmail(value) || ''
             }));
-        } else if (name === "password" && !validatePassword(value)) {
+        } else if (name === "password") {
             setError((prev) => ({  
                 ...prev,
-                password: 'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character (@$!%*?&)'
+                password: validateEmptyField(value) || validatePassword(value) || ''
             }))
-        } else if ( name === "username" && !validateUsername(value)) {
+        } else if (name === "username") {
             setError((prev) => ({  
                 ...prev,
-                username: 'Username must be at least 3 characters long'
+                username: validateEmptyField(value) || validateUsername(value) || ''
             }))
-        } else {
-            setError((prev) => ({
-                ...prev,
-                [name]: ''
-            }));
         }
+    } 
 
+    const onChangeFields = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;  
+        fieldsValidations(name, value);
         setData((prev) => ({
             ...prev, 
             [name]: value
@@ -81,22 +80,7 @@ export function useFormUser() {
     }
 
     async function saveUser(){
-        
-        // Final validation before send data, empty fields
-        if (validateEmptyField(data.username) ||
-            validateEmptyField(data.email) ||
-            validateEmptyField(data.password)) { 
-            setError((prev)=> ({
-                ...prev,
-                username: validateEmptyField(data.username) ? 'This field is required' : '',
-                email: validateEmptyField(data.email) ? 'This field is required' : '',
-                password: validateEmptyField(data.password) ? 'This field is required' : '',
-            }))
-            return;
-        }
-        
         let result = await createUser(data);
-        console.log(result);
 
         if(result.success){
             Swal.fire({
@@ -124,14 +108,18 @@ export function useFormUser() {
         }
     }
 
-    function redirect () {
-        navigate('/');
-    }
+    // if there are no errors and all fields are filled, enable the save button
+    useEffect(() => {
+        const noErrors = error.email === '' && error.password === '' && error.username === '';
+        const allFieldsFilled = data.email !== '' && data.password !== '' && data.username !== '';
+        setIsBtnSaveActive(allFieldsFilled && noErrors);
+    }, [error, data]);
 
     return {
         fields, 
         onChangeFields,
         saveUser,
-        redirect
+        redirect, 
+        isBtnSaveActive
     };
 }
