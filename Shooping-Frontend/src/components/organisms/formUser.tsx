@@ -37,7 +37,7 @@ const FormUser: React.FC = () => {
                     onClick={redirect}
                 />
                 <Button 
-                    label="Guardar"
+                    label="Save"
                     color="blue"
                     disabled={!isBtnSaveActive}
                     onClick={saveUser}
