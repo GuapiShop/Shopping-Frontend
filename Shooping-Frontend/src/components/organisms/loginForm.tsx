@@ -1,49 +1,17 @@
 import type React from "react";
 import InputLabeled from "../molecules/inputLabeled";
 import Link from "../atoms/link";
-import { useState } from "react";
-import type { Auth } from "../../models/Auth";
 import Button from "../atoms/button";
-import { login } from "../../services/authService"
 import HeadingOne from "../atoms/headingOne";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useLoginForm } from "../../utils/useLoginForm";
 
 const LoginForm: React.FC = () => {
 
-    const navigate = useNavigate();
-
-    const [credentials, setCredentials] = useState<Auth>({
-        email: "", 
-        password: "",
-    });
-
-    const onChangeFields = ( event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setCredentials ((prev) => ({
-            ...prev, 
-            [name]: value
-        }));
-    }
-
-    async function logIn () {
-        const result = await login(credentials);
-        if(localStorage.getItem('token')!==''){
-            redirectMenuPage();
-        } else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: result.message,
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
-    }
-
-    function redirectMenuPage () {
-        navigate('product/')
-    }
+    const { 
+        onChangeFields, 
+        logIn, 
+        credentials 
+    } = useLoginForm();
 
     return(
         <>
