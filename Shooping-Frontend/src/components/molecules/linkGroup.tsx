@@ -3,7 +3,7 @@ import LinkHeader from '../atoms/linkHeader';
 
 const LinkGroup: React.FC = () => {
   return ( 
-    <div className='inline-flex space-x-7 mx-auto mb-4'>
+    <div className='content-baseline space-x-7 mx-auto mb-4'>
         {/*all user*/}
         <LinkHeader label="Home" link="/" />
         

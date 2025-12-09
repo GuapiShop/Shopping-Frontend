@@ -1,16 +1,14 @@
 import React from 'react';
 import MainHeader from '../organisms/mainHeader';
+import TemplateMainPage from '../templates/templateMainPage';
 
 const MainPage: React.FC = () => {
   return (
     <>
         {/* Header */}
         <MainHeader />
-
-        
-        <div>
-            
-        </div>
+        {/* Main Content */}
+        <TemplateMainPage />
     </>
   );
 }
