@@ -7,6 +7,7 @@ import EditProductPage from './components/pages/editProductPage'
 import ListProduct from './components/pages/listProduct'
 import AddUserPage from './components/pages/addUserPage'
 import ListUsersPage from './components/pages/listUsersPage'
+import MainPage from './components/pages/mainPage'
 
 /*
 * react-router-dom
@@ -19,7 +20,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Authpage />}/>
+          <Route path='main/' element={<Authpage />}/>
+          <Route path='/' element={<MainPage />}/>
           <Route path='product/' element={<ListProduct />}/>
           <Route path='product/add' element={<AddProductPage />}/>
           <Route path='product/edit/{id}' element={<EditProductPage />}/>
