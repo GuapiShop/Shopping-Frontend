@@ -9,7 +9,7 @@ const apiAuth = 'https://localhost:7176/api/Auth/'
 */
 export async function login (auth: Auth) {
     try {
-        const result = await axios.post(apiAuth, auth, {
+        const result = await axios.post(apiAuth+'login', auth, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -41,4 +41,8 @@ export function authHeathers() {
         'Content-Type': 'application/json', 
         Authorization: `Barer ${token}`
     };
+}
+
+export function logout() {
+    localStorage.removeItem('token');
 }

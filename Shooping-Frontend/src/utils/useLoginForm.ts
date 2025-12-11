@@ -22,7 +22,8 @@ export function useLoginForm() {
 
     async function logIn () {
         const result = await login(credentials);
-        if(localStorage.getItem('token')!==''){
+
+        if( localStorage.getItem('token') !== '' && result.token ) {
             redirectMenuPage();
         } else {
             Swal.fire({

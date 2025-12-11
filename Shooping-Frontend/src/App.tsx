@@ -20,8 +20,8 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='main/' element={<Authpage />}/>
-          <Route path='/' element={<MainPage />}/>
+          <Route path='/' element={<Authpage />}/>
+          <Route path='main-page/' element={<MainPage />}/>
           <Route path='product/' element={<ListProduct />}/>
           <Route path='product/add' element={<AddProductPage />}/>
           <Route path='product/edit/{id}' element={<EditProductPage />}/>

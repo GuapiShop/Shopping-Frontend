@@ -1,6 +1,7 @@
 import React from 'react';
 import LinkGroup from '../molecules/linkGroup';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../services/authService';
 
 const MainHeader: React.FC = () => {
 
@@ -22,6 +23,16 @@ const MainHeader: React.FC = () => {
                   handleLogoClick
                 } 
             />
+            <button
+                className="text-white mt-2"
+                  onClick={() => {
+                      logout();
+                      navigate('/');
+                  }
+                }
+            >
+                Log Out
+            </button>
         </div>
 
         {/*Group of Links*/}
