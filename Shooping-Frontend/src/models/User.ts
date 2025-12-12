@@ -2,7 +2,8 @@ export interface User {
     id: number, 
     username: string, 
     email: string, 
-    password: string, 
+    password: string,
+    role: string, 
     isActive: boolean, 
     createAt: string, 
     updateAt: string

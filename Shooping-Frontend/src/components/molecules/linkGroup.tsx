@@ -5,13 +5,19 @@ const LinkGroup: React.FC = () => {
   return ( 
     <div className='content-baseline space-x-7 mx-auto mb-4'>
         {/*all user*/}
-        <LinkHeader label="Home" link="/" />
+        <LinkHeader label="Home" link="/main-page" />
         
-        {/*admins*/}
-        <LinkHeader label="Products" link="/products" />
-        <LinkHeader label="Users" link="/users" />
-
-        {/*customers*/}
+        {localStorage.getItem("role") === "admin" ? (
+          // admin links
+          <>
+            <LinkHeader label="Users" link="/user" />
+          </>
+        ) : (
+          // customers links
+          <>
+            <LinkHeader label="Products" link="/product" />
+          </>
+        )}
     </div>
   );
 }

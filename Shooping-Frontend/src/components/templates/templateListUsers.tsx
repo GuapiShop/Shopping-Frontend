@@ -1,5 +1,5 @@
 import type React from "react";
-import Table from "../organisms/table";
+import TableUser from "../organisms/tableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../services/userService";
 import type { User } from "../../models/User";
@@ -11,6 +11,7 @@ const TempListUsers: React.FC = () => {
     const header = [
         "Username", 
         "Email", 
+        "Role", 
         "Is Active",
         "Actions"
     ]
@@ -25,7 +26,7 @@ const TempListUsers: React.FC = () => {
 
     return(
         <>
-            <Table 
+            <TableUser 
                 arrayHeader={header}
                 arrayRows={row}
             />

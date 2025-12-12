@@ -16,6 +16,7 @@ export async function login (auth: Auth) {
         })
 
         localStorage.setItem("token", result.data.token);
+        localStorage.setItem("role", result.data.role);
         
         return {
             message: result.data.message,
@@ -37,12 +38,13 @@ export async function login (auth: Auth) {
 
 export function authHeathers() {
     const token = localStorage.getItem('token');
-    return{
+    return {
         'Content-Type': 'application/json', 
-        Authorization: `Barer ${token}`
+        Authorization: `Bearer ${token}`
     };
 }
 
 export function logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
 }

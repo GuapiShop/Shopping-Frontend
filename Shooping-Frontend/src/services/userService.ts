@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { User, UserCreateDTO } from "../models/User";
+import { authHeathers } from "./authService"
 
 const apiUser = "https://localhost:7176/api/Users";
 
@@ -40,7 +41,9 @@ export async function createUser( user: UserCreateDTO ){
 */
 export async function getAllUsers(){ 
     try {
-        const result = await axios.get(apiUser)
+        const result = await axios.get( apiUser, {
+            headers: authHeathers()
+        });
         return { 
             data: result.data, 
             success: true
