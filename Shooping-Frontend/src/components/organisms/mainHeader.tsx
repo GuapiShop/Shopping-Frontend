@@ -37,6 +37,10 @@ const MainHeader: React.FC = () => {
 
         {/*Group of Links*/}
         <LinkGroup />
+
+        <div className='mx-30 py-4'>
+          <hr className='text-gray-500 opacity-50'/>
+        </div>
     </>
   );
 } 

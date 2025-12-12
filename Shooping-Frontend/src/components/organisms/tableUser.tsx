@@ -12,14 +12,13 @@ const TableUser: React.FC<TableUserProps> = ({
     arrayRows, 
 }) => {
     return (
-        arrayRows ? (
         <>
-            <table>
+            <table className="w-full">
                 {/* Table header*/}
-                <thead>
+                <thead className="bg-[#eb354c] px-2 py-2">
                     <tr>
                         {arrayHeader.map((header)=>(
-                            <th>{header}</th>
+                            <th className="px-3 py-3 text-white text-lg">{header}</th>
                         ))}
                     </tr>
                 </thead>
@@ -28,13 +27,13 @@ const TableUser: React.FC<TableUserProps> = ({
                 <tbody>
                     {arrayRows.map((user)=>(
                         <tr>
-                            <td>{user.username}</td>
-                            <td>{user.email}</td>
-                            <td>{user.role}</td>
-                            <td>{user.isActive ? "Yes" : "No"}</td>
-                            <td>
+                            <td className="px-2 py-2 text-lg">{user.username}</td>
+                            <td className="px-2 py-2 text-lg">{user.email}</td>
+                            <td className="px-2 py-2 text-lg">{user.role}</td>
+                            <td className="px-2 py-2 text-lg">{user.isActive ? "Yes" : "No"}</td>
+                            <td className="px-2 py-2 text-lg">
                                 <Link 
-                                    label="edit"
+                                    label="Edit"
                                     link={`/user-edit/${user.id}`}
                                 />
                             </td>
@@ -43,11 +42,6 @@ const TableUser: React.FC<TableUserProps> = ({
                 </tbody>
             </table>
         </>
-        ) : (
-        <>
-            <h1> No users </h1> <Link label="create user" link="/user-create"></Link>
-        </>
-        )
     );
 }
 
