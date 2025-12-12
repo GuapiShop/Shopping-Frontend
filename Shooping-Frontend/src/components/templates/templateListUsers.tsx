@@ -1,28 +1,18 @@
 import type React from "react";
 import TableUser from "../organisms/tableUser";
-import { useEffect, useState } from "react";
-import { getAllUsers } from "../../services/userService";
-import type { User } from "../../models/User";
+import { useListUsers } from "../../utils/useListUsers";
+import Pagination from "../molecules/pagination";
 
 const TempListUsers: React.FC = () => {
 
-    const [row, setRow] = useState<User[]>([]);
-
-    const header = [
-        "Username", 
-        "Email", 
-        "Role", 
-        "Is Active",
-        "Actions"
-    ]
-
-    useEffect(() => {
-        const fetchUsers = async() => {
-            const data = await getAllUsers();
-            setRow(data.data);
-        }
-        fetchUsers();
-    })
+    const {
+        header,
+        row, 
+        page, 
+        totalPage, 
+        changePreviousPage, 
+        changeNextPage,
+    } = useListUsers();
 
     return(
         <>
@@ -30,6 +20,12 @@ const TempListUsers: React.FC = () => {
                 arrayHeader={header}
                 arrayRows={row}
             />
+            <Pagination 
+                page={page}
+                totalPage={totalPage}
+                changeNextPage={changeNextPage}
+                changePreviousPage={changePreviousPage}
+            /> 
         </>
     );
 }

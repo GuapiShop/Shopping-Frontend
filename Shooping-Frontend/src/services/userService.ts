@@ -39,15 +39,17 @@ export async function createUser( user: UserCreateDTO ){
 * endpoint get users
 * GET: /api/Users
 */
-export async function getAllUsers(){ 
+export async function getAllUsers(page: number, pageSize: number){ 
     try {
-        const result = await axios.get( apiUser, {
+        const result = await axios.get(apiUser+`?page=${page}&pageSize=${pageSize}`, {
             headers: authHeathers()
         });
         return { 
-            data: result.data, 
+            page: result.data.page,
+            totalPage: result.data.totalPage,
+            data: result.data.data, 
             success: true
-        }
+        };
     } catch (error) {
         let message = "Unknown Error."
          return {

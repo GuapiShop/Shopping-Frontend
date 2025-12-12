@@ -1,6 +1,4 @@
 import type React from "react";
-import TableHeader from "../molecules/tableHeader";
-import TableRow from "../molecules/tableRow";
 import type { User } from "../../models/User";
 import Link from "../atoms/link";
 
@@ -11,27 +9,38 @@ type TableUserProps = {
 
 const TableUser: React.FC<TableUserProps> = ({
     arrayHeader, 
-    arrayRows
+    arrayRows, 
 }) => {
     return (
         arrayRows ? (
         <>
             <table>
-                <TableHeader 
-                    array={arrayHeader}
-                />
-                {arrayRows.map((user)=>(
-                    <TableRow 
-                        array={ 
-                            [
-                                user.username, 
-                                user.email, 
-                                user.role,
-                                user.isActive, 
-                            ]
-                        }
-                    />
-                ))}
+                {/* Table header*/}
+                <thead>
+                    <tr>
+                        {arrayHeader.map((header)=>(
+                            <th>{header}</th>
+                        ))}
+                    </tr>
+                </thead>
+
+                {/* Table rows */}
+                <tbody>
+                    {arrayRows.map((user)=>(
+                        <tr>
+                            <td>{user.username}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                            <td>{user.isActive ? "Yes" : "No"}</td>
+                            <td>
+                                <Link 
+                                    label="edit"
+                                    link={`/user-edit/${user.id}`}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </>
         ) : (
