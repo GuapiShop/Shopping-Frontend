@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { User, UserCreateDTO } from "../models/User";
 import { authHeathers } from "./authService"
+import type { ApiResponse } from "../models/ApiResponse";
 
 const apiUser = "https://localhost:7176/api/Users";
 
@@ -94,7 +95,7 @@ export async function getUser(id: number){
 */
 export async function updateUser(user: User){ 
     try {
-        const result = await axios.put(apiUser +`/disable/${user.id}`, user, {
+        const result = await axios.put(apiUser +`/${user.id}`, user, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -126,16 +127,12 @@ export async function updateUser(user: User){
 * endpoint disable user
 * PUT: /api/Users/disable/id
 */
-export async function disableUser(id: number){ 
+export async function disableUser(id: number): Promise<ApiResponse>{ 
     try {
-        const result = await axios.put(apiUser +`/disable/${id}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const result = await axios.put(apiUser +`/disable/${id}`, null, {
+            headers: authHeathers()
         });
-
         return {
-            data: result.data,
             success: true, 
             status: result.status
         }

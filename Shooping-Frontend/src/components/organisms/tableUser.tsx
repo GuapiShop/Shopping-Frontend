@@ -1,15 +1,19 @@
 import type React from "react";
 import type { User } from "../../models/User";
 import Link from "../atoms/link";
+import ModalDisable from "./modalDisable";
+import type { ApiResponse } from "../../models/ApiResponse";
 
 type TableUserProps = {
     arrayHeader: string[];
     arrayRows: User[];
+    onDisable: (id:number) => Promise<ApiResponse>
 }
 
 const TableUser: React.FC<TableUserProps> = ({
     arrayHeader, 
     arrayRows, 
+    onDisable, 
 }) => {
     return (
         <>
@@ -35,6 +39,10 @@ const TableUser: React.FC<TableUserProps> = ({
                                 <Link 
                                     label="Edit"
                                     link={`/user-edit/${user.id}`}
+                                />
+                                <ModalDisable 
+                                    message="Do you agree to deactivate this user?"
+                                    onDisable={() => onDisable(user.id)}
                                 />
                             </td>
                         </tr>

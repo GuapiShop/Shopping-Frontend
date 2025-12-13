@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { User } from "../models/User";
-import { getAllUsers } from "../services/userService";
+import { getAllUsers, disableUser } from "../services/userService";
+import type { ApiResponse } from "../models/ApiResponse";
 
 export const useListUsers = () => {
     const [page, setPage] = useState<number>(1);
@@ -33,6 +34,11 @@ export const useListUsers = () => {
         setPage(prev => prev > totalPage ? prev+1 : totalPage )
     }
 
+    async function disable ( id:number ) : Promise<ApiResponse>{
+        const result = await disableUser(id);
+        return result;
+    }
+
     return {
         header,
         row, 
@@ -40,5 +46,6 @@ export const useListUsers = () => {
         totalPage, 
         changePreviousPage, 
         changeNextPage,
+        disable, 
     }
 }   
