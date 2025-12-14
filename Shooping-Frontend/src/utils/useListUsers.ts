@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { User } from "../models/User";
-import { getAllUsers, disableUser } from "../services/userService";
+import { getAllUsers, disableUser, enableUser } from "../services/userService";
 import type { ApiResponse } from "../models/ApiResponse";
 
 export const useListUsers = () => {
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(1); 
-    const [pageSize] = useState<number>(1);
+    const pageSize = 1;
     const [row, setRow] = useState<User[]>([]);
 
     const header = [
@@ -17,25 +17,39 @@ export const useListUsers = () => {
         "Actions"
     ]
 
+    const fetchUsers = useCallback(async () => {
+        const data = await getAllUsers(page, pageSize);
+        setRow(data.data);
+        setTotalPage(data.totalPage);
+    }, [page, pageSize]);
+
     useEffect(() => {
-        const fetchUsers = async() => {
-            const data = await getAllUsers(page, pageSize);
-            setRow(data.data);
-            setTotalPage(data.totalPage);
-        }
         fetchUsers();
-    }, [page, pageSize])
+    }, [fetchUsers])
 
     const changePreviousPage = () => {
         setPage(prev => prev > 1 ? prev-1 : 1)
     }
 
     const changeNextPage = () => {
-        setPage(prev => prev > totalPage ? prev+1 : totalPage )
+        setPage(prev => prev < totalPage ? prev+1 : totalPage )
     }
 
     async function disable ( id:number ) : Promise<ApiResponse>{
         const result = await disableUser(id);
+        console.log(id)
+        console.log(result)
+        if (result.success) {
+            await fetchUsers()
+        }
+        return result;
+    }
+
+    async function enable ( id:number ) : Promise<ApiResponse>{
+        const result = await enableUser(id);
+        if (result.success) {
+            await fetchUsers()
+        }
         return result;
     }
 
@@ -46,6 +60,7 @@ export const useListUsers = () => {
         totalPage, 
         changePreviousPage, 
         changeNextPage,
-        disable, 
+        disable,
+        enable, 
     }
 }   

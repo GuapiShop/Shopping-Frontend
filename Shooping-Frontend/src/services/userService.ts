@@ -157,7 +157,7 @@ export async function disableUser(id: number): Promise<ApiResponse>{
 * endpoint enable user
 * PUT: /api/Users/enable/id
 */
-export async function enableUser(id: number){ 
+export async function enableUser(id: number): Promise<ApiResponse>{ 
     try {
         const result = await axios.put(apiUser +`/enable/${id}`, {
             headers: {

@@ -1,33 +1,31 @@
 import type React from "react";
 import Swal from "sweetalert2";
 import type { ApiResponse } from "../../models/ApiResponse";
-import { NoSymbolIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
-type ModalDisableProps = {
-    isDisabled?: boolean
+type ModalEnableProps = {
     message: string
-    onDisable: () => Promise<ApiResponse>
+    onEnable: () => Promise<ApiResponse>
 }
 
-const ModalDisable: React.FC<ModalDisableProps> = ({
-    isDisabled = false, 
+const ModalEnable: React.FC<ModalEnableProps> = ({
     message,
-    onDisable
+    onEnable
 }) => {
 
     async function showModal () {
         const confirm = await Swal.fire({
             title: `${message}`,
             showCancelButton: true,
-            confirmButtonText: "Disable",
+            confirmButtonText: "Enable",
             cancelButtonText: 'Cancelar',
             confirmButtonColor: '#eb354c'
         }); 
 
         if (confirm.isConfirmed){
-            const result = await onDisable();
+            const result = await onEnable();
             if (result.success){
-                Swal.fire("Disabled", "", "success"); 
+                Swal.fire("Enabled", "", "success"); 
             } else {
                 Swal.fire(
                     "Error",
@@ -41,15 +39,14 @@ const ModalDisable: React.FC<ModalDisableProps> = ({
     return(
         <div className="px-2 py-2">
             <button 
-                title="Disable"
-                disabled={isDisabled}
+                title="Enable"
                 className="py-2 px-4 rounded-full disabled:opacity-70 disabled:cursor-not-allowed hover:cursor-pointer bg-[#eb354c] hover:bg-[#e91e39]"
                 onClick={showModal}
             >
-                <NoSymbolIcon className="h-6 w-6 text-white font-semibold" />
+                <ArrowPathIcon className="h-6 w-6 text-white font-semibold" />
             </button>
         </div>
     );
 }
 
-export default ModalDisable
+export default ModalEnable

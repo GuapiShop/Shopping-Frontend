@@ -13,7 +13,8 @@ const TempListUsers: React.FC = () => {
         totalPage, 
         changePreviousPage, 
         changeNextPage,
-        disable
+        disable, 
+        enable
     } = useListUsers();
 
     return(
@@ -31,6 +32,7 @@ const TempListUsers: React.FC = () => {
                             arrayHeader={header}
                             arrayRows={row}
                             onDisable={disable}
+                            onEnable={enable}
                         />
                         <Pagination 
                             page={page}
