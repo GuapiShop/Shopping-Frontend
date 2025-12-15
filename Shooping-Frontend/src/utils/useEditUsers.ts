@@ -1,37 +1,72 @@
 import { useState } from "react"
-import type { User } from "../models/User"
+import type { UserUpdateDTO } from "../models/User"
 import { updateUser } from "../services/userService"
+import Swal from "sweetalert2"
 
-export const useEditUsers = () => {
+export const useEditUsers = (
+    onUpdated: () => Promise<void>
+) => {
 
     const [idEdit, setIdEdit] = useState<number|null>(null)
-    const [user, setUser] = useState<User> ({
+    const [editUser, setUser] = useState<UserUpdateDTO> ({
         id: 0,
         username: "", 
-        password: "", 
         email: "", 
-        isActive: false,
-        role: "",  
-        createAt: "", 
-        updateAt: "",
     })
 
-    const setEditUser = (user:User) => {
+    const setEditUser = (user:UserUpdateDTO) => {
         setIdEdit(user.id); 
         setUser(user); 
     }
 
-    const handleUpdateUser = async () => {
-        const result = await updateUser(user);
+    const removeEditUser = () => {
+        setIdEdit(null)
+        setUser({
+            id: 0, 
+            email: "", 
+            username: ""
+        })
     }
 
-    const handleChange = () => {
+    const handleUpdateUser = async () => {
+        const result = await updateUser(editUser);
+
+        if (result.success) {
+            await onUpdated();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Update user",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            removeEditUser();
+        } else {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }
+
+    const onChangeFields = (event:React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        
+        setUser ((prev) => ({
+            ...prev, 
+            [name]: value
+        }));
     }
 
     return {
         idEdit, 
+        editUser, 
         setEditUser,
-        handleChange, 
+        removeEditUser, 
+        onChangeFields, 
         handleUpdateUser,
     }
 }

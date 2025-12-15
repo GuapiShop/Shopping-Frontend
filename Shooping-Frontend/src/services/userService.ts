@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { User, UserCreateDTO } from "../models/User";
+import type { UserCreateDTO, UserUpdateDTO } from "../models/User";
 import { authHeathers } from "./authService"
 import type { ApiResponse } from "../models/ApiResponse";
 
@@ -93,14 +93,11 @@ export async function getUser(id: number){
 * endpoint update user
 * PUT: /api/Users/id
 */
-export async function updateUser(user: User): Promise<ApiResponse>{ 
+export async function updateUser(user: UserUpdateDTO): Promise<ApiResponse>{ 
     try {
         const result = await axios.put(apiUser +`/${user.id}`, user, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: authHeathers()
         });
-
         return {
             data: result.data,
             success: true, 
@@ -159,10 +156,8 @@ export async function disableUser(id: number): Promise<ApiResponse>{
 */
 export async function enableUser(id: number): Promise<ApiResponse>{ 
     try {
-        const result = await axios.put(apiUser +`/enable/${id}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        const result = await axios.put(apiUser +`/enable/${id}`, null, {
+            headers: authHeathers()
         });
 
         return {

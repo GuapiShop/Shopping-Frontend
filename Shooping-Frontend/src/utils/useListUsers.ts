@@ -6,7 +6,7 @@ import type { ApiResponse } from "../models/ApiResponse";
 export const useListUsers = () => {
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(1); 
-    const pageSize = 1;
+    const pageSize = 10;
     const [row, setRow] = useState<User[]>([]);
 
     const header = [
@@ -37,8 +37,6 @@ export const useListUsers = () => {
 
     async function disable ( id:number ) : Promise<ApiResponse>{
         const result = await disableUser(id);
-        console.log(id)
-        console.log(result)
         if (result.success) {
             await fetchUsers()
         }
@@ -47,6 +45,9 @@ export const useListUsers = () => {
 
     async function enable ( id:number ) : Promise<ApiResponse>{
         const result = await enableUser(id);
+
+        console.log("Result", result)
+
         if (result.success) {
             await fetchUsers()
         }
@@ -62,5 +63,6 @@ export const useListUsers = () => {
         changeNextPage,
         disable,
         enable,
+        fetchUsers, 
     }
 }   

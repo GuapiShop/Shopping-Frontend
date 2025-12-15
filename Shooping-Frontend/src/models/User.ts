@@ -15,6 +15,12 @@ export interface UserCreateDTO {
     password: string, 
 }
 
+export interface UserUpdateDTO {
+    id: number,
+    username: string, 
+    email: string,
+}
+
 export interface ErrorUserDTO {
     username: string, 
     email: string, 

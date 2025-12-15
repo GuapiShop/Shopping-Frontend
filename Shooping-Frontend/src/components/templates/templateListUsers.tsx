@@ -3,21 +3,30 @@ import TableUser from "../organisms/tableUser";
 import { useListUsers } from "../../utils/useListUsers";
 import Pagination from "../molecules/pagination";
 import Link from "../atoms/link";
+import { useEditUsers } from "../../utils/useEditUsers";
 
 const TempListUsers: React.FC = () => {
 
     const {
         header,
         row, 
-        page, 
+        page,
         totalPage, 
         changePreviousPage, 
         changeNextPage,
-        disable, 
-        enable, 
-        idEdit, 
-        setEditUser
+        disable,
+        enable,
+        fetchUsers
     } = useListUsers();
+
+    const {
+        idEdit,  
+        editUser, 
+        setEditUser,
+        removeEditUser, 
+        handleUpdateUser, 
+        onChangeFields, 
+    } = useEditUsers(fetchUsers);
 
     return(
         <>
@@ -34,9 +43,13 @@ const TempListUsers: React.FC = () => {
                             arrayHeader={header}
                             arrayRows={row}
                             idEdit={idEdit}
+                            editUser={editUser}
+                            removeEditUser={removeEditUser}
+                            setEditUser={setEditUser}
+                            handleUpdateUser={handleUpdateUser}
                             onDisable={disable}
                             onEnable={enable}
-                            setEditUser={setEditUser}
+                            onChangeFields={onChangeFields}
                         />
                         <Pagination 
                             page={page}
