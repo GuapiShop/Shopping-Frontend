@@ -93,7 +93,7 @@ export async function getUser(id: number){
 * endpoint update user
 * PUT: /api/Users/id
 */
-export async function updateUser(user: User){ 
+export async function updateUser(user: User): Promise<ApiResponse>{ 
     try {
         const result = await axios.put(apiUser +`/${user.id}`, user, {
             headers: {

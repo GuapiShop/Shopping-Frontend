@@ -61,6 +61,6 @@ export const useListUsers = () => {
         changePreviousPage, 
         changeNextPage,
         disable,
-        enable, 
+        enable,
     }
 }   
