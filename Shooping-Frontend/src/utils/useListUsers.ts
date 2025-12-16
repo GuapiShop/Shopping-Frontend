@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import type { User } from "../models/User";
-import { getAllUsers, disableUser, enableUser } from "../services/userService";
 import type { ApiResponse } from "../models/ApiResponse";
+import { getAllUsers, disableUser, enableUser } from "../services/userService";
+import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify"
 
 export const useListUsers = () => {
     const [page, setPage] = useState<number>(1);
@@ -39,17 +40,24 @@ export const useListUsers = () => {
         const result = await disableUser(id);
         if (result.success) {
             await fetchUsers()
+            modalSuccess("Disabled", "User successfully reactivated.")
+        } else if (result.status===404){
+            modalWarning("Warning", result.message)
+        } else {
+            modalError("Error", "Error in server.")
         }
         return result;
     }
 
     async function enable ( id:number ) : Promise<ApiResponse>{
         const result = await enableUser(id);
-
-        console.log("Result", result)
-
         if (result.success) {
             await fetchUsers()
+            modalSuccess("Reactivated", "User successfully deactivated")
+        } else if (result.status===404){
+            modalError("Error", result.message)
+        } else {
+            modalError("Error", "Error in server.")
         }
         return result;
     }

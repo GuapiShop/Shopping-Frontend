@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import type { ErrorUserDTO, UserCreateDTO } from "../models/User";
 import { createUser } from "../services/userService";
 import { validateEmptyField } from "./generalValidations";
 import { validateUsername, validateEmail, validatePassword } from "./validateFormUser";
+import { modalError, modalSuccess } from "../components/organisms/modalNotify";
 
 export function useFormUser() {
     const navigate = useNavigate();
@@ -81,30 +81,13 @@ export function useFormUser() {
 
     async function saveUser(){
         let result = await createUser(data);
-
         if(result.success){
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "User created",
-                showConfirmButton: false,
-                timer: 1500
-            });
+            modalSuccess("Created", "User successfully created.")
             redirect();
-        }else{
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Error",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            
-            setError({
-                email: result.data.errors.Email?.[0], 
-                password: result.data.errors.Password?.[0], 
-                username: result.data.errors.Username?.[0]
-            })
+        }else if(result.status===400){
+            modalError("Warning", "Missing required fields.")
+        } else {
+            modalError("Error", "Error in server.")
         }
     }
 

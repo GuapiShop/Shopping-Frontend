@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { Auth } from "../models/Auth";
-import Swal from "sweetalert2";
+import { modalWarning } from "../components/organisms/modalNotify";
 import { login } from "../services/authService";
 
 export function useLoginForm() {
@@ -22,17 +22,10 @@ export function useLoginForm() {
 
     async function logIn () {
         const result = await login(credentials);
-
-        if( localStorage.getItem('token') !== '' && result.token ) {
+        if( result.status===200 && localStorage.getItem('token') !== '' && result.token ) {
             redirectMenuPage();
-        } else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: result.message,
-                showConfirmButton: false,
-                timer: 1500
-            });
+        } else if (result.status===404){
+            modalWarning("Warning", "User email does not match password.")
         }
     }
 

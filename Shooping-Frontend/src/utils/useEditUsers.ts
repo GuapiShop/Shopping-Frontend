@@ -1,12 +1,11 @@
 import { useState } from "react"
 import type { UserUpdateDTO } from "../models/User"
 import { updateUser } from "../services/userService"
-import Swal from "sweetalert2"
+import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify"
 
 export const useEditUsers = (
     onUpdated: () => Promise<void>
 ) => {
-
     const [idEdit, setIdEdit] = useState<number|null>(null)
     const [editUser, setUser] = useState<UserUpdateDTO> ({
         id: 0,
@@ -33,28 +32,17 @@ export const useEditUsers = (
 
         if (result.success) {
             await onUpdated();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Update user",
-                showConfirmButton: false,
-                timer: 1500
-            });
             removeEditUser();
+            modalSuccess("Disabled", "User successfully reactivated.")
+        } else if (result.status===404){
+            modalWarning("Warning", result.message)
         } else {
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: "Error",
-                showConfirmButton: false,
-                timer: 1500
-            });
+            modalError("Error", "Error in server.")
         }
     }
 
     const onChangeFields = (event:React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        
         setUser ((prev) => ({
             ...prev, 
             [name]: value
