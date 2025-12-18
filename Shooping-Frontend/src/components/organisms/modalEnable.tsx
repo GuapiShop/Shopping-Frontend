@@ -23,16 +23,7 @@ const ModalEnable: React.FC<ModalEnableProps> = ({
         }); 
 
         if (confirm.isConfirmed){
-            const result = await onEnable();
-            if (result.success){
-                Swal.fire("Enabled", "", "success"); 
-            } else {
-                Swal.fire(
-                    "Error",
-                    result.message,
-                    "error"
-                );
-            }
+            await onEnable();
         }    
     }
 

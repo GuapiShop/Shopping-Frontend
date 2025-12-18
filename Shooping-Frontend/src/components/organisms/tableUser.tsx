@@ -7,15 +7,17 @@ import ButtonSave from "../molecules/buttonSave";
 import ButtonEdit from "../molecules/buttonEdit"
 import Input from "../atoms/input";
 import ButtonCancel from "../molecules/buttonCancel";
+import ErrorMessage from "../atoms/error";
 
 type TableUserProps = {
     arrayHeader: string[];
     arrayRows: User[];
     idEdit: number | null;
     editUser: UserUpdateDTO;
+    error: UserUpdateDTO;
     removeEditUser: () => void;
     setEditUser: (user:User) => void;
-    handleUpdateUser: () => void
+    handleUpdateUser: () => void;
     onDisable: (id:number) => Promise<ApiResponse>;
     onEnable: (id:number) => Promise<ApiResponse>;
     onChangeFields: (event:React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,6 +28,7 @@ const TableUser: React.FC<TableUserProps> = ({
     arrayRows, 
     idEdit,
     editUser, 
+    error,
     removeEditUser, 
     setEditUser,  
     onDisable, 
@@ -44,7 +47,6 @@ const TableUser: React.FC<TableUserProps> = ({
                         ))}
                     </tr>
                 </thead>
-
                 {/* Table rows */}
                 <tbody>
                     {arrayRows.map((user)=>(
@@ -52,29 +54,46 @@ const TableUser: React.FC<TableUserProps> = ({
                             {idEdit !== null && user.id===idEdit ? (
                                 <>
                                     <td className="px-2 py-2 text-lg">
-                                        <Input 
-                                            name="username"
-                                            type="text"
-                                            onChange={onChangeFields}
-                                            value={editUser.username}
-                                            placeholder="Username"
-                                        />
+                                        <div
+                                            className="mb-4"
+                                        >
+                                            <Input 
+                                                name="username"
+                                                type="text"
+                                                onChange={onChangeFields}
+                                                value={editUser.username}
+                                                placeholder="Username"
+                                            />
+                                            {error.username && 
+                                                <ErrorMessage 
+                                                    message={error.username}
+                                                />
+                                            }
+                                        </div>
                                     </td>
                                     <td className="px-2 py-2 text-lg">
-                                        <Input 
-                                            name="email"
-                                            type="text"
-                                            onChange={onChangeFields}
-                                            value={editUser.email}
-                                            placeholder="Email"
-                                        />
+                                        <div
+                                            className="mb-4"
+                                        >
+                                            <Input 
+                                                name="email"
+                                                type="text"
+                                                onChange={onChangeFields}
+                                                value={editUser.email}
+                                                placeholder="Email"
+                                            />
+                                            {error.email && 
+                                                <ErrorMessage 
+                                                    message={error.email}
+                                                />
+                                            }
+                                        </div>
                                     </td>
                                     <td className="px-2 py-2 text-lg">{user.role}</td>
                                     <td className="px-2 py-2 text-lg">{user.isActive ? "Yes" : "No"}</td>
-                                    
                                     <td className="flex justify-center px-2 py-2 text-lg">
                                         <ButtonSave 
-                                            isDisabled={false}
+                                            isDisabled={error.email!==""||error.username!=="" }
                                             onSave={() => handleUpdateUser()}
                                         />
                                         <ButtonCancel
@@ -93,7 +112,6 @@ const TableUser: React.FC<TableUserProps> = ({
                                             isDisabled={(user.role === "admin") ? true : false}
                                             setEdit={() => setEditUser(user)}
                                         />
-
                                         {user.isActive ? ( 
                                             <ModalDisable 
                                                 isDisabled={(user.role === "admin") ? true : false}

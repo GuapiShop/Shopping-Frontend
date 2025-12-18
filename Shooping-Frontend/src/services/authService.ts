@@ -19,6 +19,7 @@ export async function login (auth: Auth) {
         localStorage.setItem("role", result.data.role);
         
         return {
+            status: result.status,
             message: result.data.message,
             token: result.data.token
         }

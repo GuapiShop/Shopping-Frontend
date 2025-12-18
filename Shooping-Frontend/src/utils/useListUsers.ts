@@ -40,7 +40,7 @@ export const useListUsers = () => {
         const result = await disableUser(id);
         if (result.success) {
             await fetchUsers()
-            modalSuccess("Disabled", "User successfully reactivated.")
+            modalSuccess("Disabled", "User successfully disabled.")
         } else if (result.status===404){
             modalWarning("Warning", result.message)
         } else {
@@ -53,7 +53,7 @@ export const useListUsers = () => {
         const result = await enableUser(id);
         if (result.success) {
             await fetchUsers()
-            modalSuccess("Reactivated", "User successfully deactivated")
+            modalSuccess("Reactivated", "User successfully reactivated")
         } else if (result.status===404){
             modalError("Error", result.message)
         } else {

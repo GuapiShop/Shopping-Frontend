@@ -25,17 +25,8 @@ const ModalDisable: React.FC<ModalDisableProps> = ({
         }); 
 
         if (confirm.isConfirmed){
-            const result = await onDisable();
-            if (result.success){
-                Swal.fire("Disabled", "", "success"); 
-            } else {
-                Swal.fire(
-                    "Error",
-                    result.message,
-                    "error"
-                );
-            }
-        }    
+            await onDisable();
+        } 
     }
 
     return(

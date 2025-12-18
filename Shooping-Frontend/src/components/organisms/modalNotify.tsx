@@ -8,7 +8,7 @@ export const modalSuccess = (title:string, text:string) => {
         title: `${title}`,
         text: `${text}`, 
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
     });
 }
 
@@ -20,7 +20,7 @@ export const modalError = (title:string, text:string) => {
         title: `${title}`,
         text: `${text}`, 
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
     });
 } 
 
@@ -32,6 +32,6 @@ export const modalWarning = (title:string, text:string) => {
         title: `${title}`,
         text: `${text}`, 
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
     });
 } 

@@ -26,6 +26,7 @@ const TempListUsers: React.FC = () => {
         removeEditUser, 
         handleUpdateUser, 
         onChangeFields, 
+        error
     } = useEditUsers(fetchUsers);
 
     return(
@@ -50,6 +51,7 @@ const TempListUsers: React.FC = () => {
                             onDisable={disable}
                             onEnable={enable}
                             onChangeFields={onChangeFields}
+                            error={error}
                         />
                         <Pagination 
                             page={page}
