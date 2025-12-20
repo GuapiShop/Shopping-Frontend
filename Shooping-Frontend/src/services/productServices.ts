@@ -1,8 +1,8 @@
 import axios from "axios";
 import type { Product, ProductCreateDTO } from "../models/Product";
 import { authHeathers } from "./authService";
-import { handleAxiosError } from "./errorsHandler";
-import type { ApiResponse } from "../models/ApiResponse";
+import { handleAxiosError, handleAxiosErrorPaginated } from "./errorsHandler";
+import type { ApiResponse, ApiPaginated } from "../models/ApiResponse";
 
 const apiProduct = "https://localhost:7176/api/Products/";
 
@@ -21,7 +21,18 @@ export async function createProduct ( product: ProductCreateDTO ): Promise<ApiRe
             success: true
         }
     } catch (error) {
-        return handleAxiosError(error);
+        let message = "Unkown error."
+        let status = 500;
+
+        if(axios.isAxiosError(error)){
+            message = error.response?.data;
+            status =  error.response?.status || 500;
+        }   
+        return {
+            message: message, 
+            status: status, 
+            success: false
+        } 
     }
 }
 
@@ -41,7 +52,18 @@ export async function updateProduct ( product: Product ): Promise<ApiResponse<Pr
             status: result.status
         }
     } catch (error) {
-        return handleAxiosError(error);
+        let message = "Unkown error."
+        let status = 500;
+
+        if(axios.isAxiosError(error)){
+            message = error.response?.data;
+            status =  error.response?.status || 500;
+        }   
+        return {
+            message: message, 
+            status: status, 
+            success: false
+        } 
     }
 }
 
@@ -60,7 +82,18 @@ export async function deleteProduct(id: number): Promise<ApiResponse<Product>> {
             success: true
         };
     } catch (error) {
-        return handleAxiosError(error);
+        let message = "Unkown error."
+        let status = 500;
+
+        if(axios.isAxiosError(error)){
+            message = error.response?.data;
+            status =  error.response?.status || 500;
+        }   
+        return {
+            message: message, 
+            status: status, 
+            success: false
+        } 
     }    
 }
 
@@ -68,18 +101,20 @@ export async function deleteProduct(id: number): Promise<ApiResponse<Product>> {
 * endpoint get a list of products
 * GET: /api/Products
 */
-export async function getAllProducts(): Promise<ApiResponse<Product>> {
+export async function getAllProducts(page: number, pageSize: number) : Promise<ApiPaginated<Product[]>>{
     try {
-        const result = await axios.get(apiProduct, {
+        const result = await axios.get(apiProduct +`?page=${page}&pageSize=${pageSize}`, {
             headers: authHeathers()
         });
         return { 
-            data: result.data, 
-            success: true,
-            status: result.status
+            page: result.data.page,
+            totalPage: result.data.totalPage,
+            data: result.data.data, 
+            success: true, 
+            status: result.status,
         }
-    } catch (error) {
-        return handleAxiosError(error);
+    } catch (error) { 
+        return handleAxiosErrorPaginated(error);
     }
 }
 
@@ -98,6 +133,17 @@ export async function getProduct(id: number): Promise<ApiResponse<Product>> {
             success: true
         }
     } catch (error) {
-        return handleAxiosError(error);
+        let message = "Unkown error."
+        let status = 500;
+
+        if(axios.isAxiosError(error)){
+            message = error.response?.data;
+            status =  error.response?.status || 500;
+        }   
+        return {
+            message: message, 
+            status: status, 
+            success: false
+        } 
     }
 }

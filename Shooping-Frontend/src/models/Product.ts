@@ -4,7 +4,6 @@ export interface Product {
     description: string, 
     category: string, 
     codeCABYS: string, 
-    quantity: number, 
     price: number
 }
 
@@ -13,7 +12,5 @@ export interface ProductCreateDTO {
     description: string, 
     category: string, 
     codeCABYS: string, 
-    quantity: number, 
     price: number
 }
-
