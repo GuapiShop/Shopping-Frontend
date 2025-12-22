@@ -4,16 +4,14 @@ import FormProduct from "../organisms/formProduct";
 
 const TempAddProduct: React.FC = () => {
     return (
-        <>
+        <div
+            className="rounded shadow-lg px-8 py-8 size-w-full max-w-md mx-auto mt-20 bg-white"
+        >
             <HeadingOne 
                 label="Add product"
-                className=""
             />
-            <FormProduct 
-                classNameBtn="button-add"
-                product={null}
-            />
-        </>
+            <FormProduct />
+        </div>
     );
 }
 export default TempAddProduct;

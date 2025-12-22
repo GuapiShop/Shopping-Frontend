@@ -1,130 +1,48 @@
-import React, { useState } from "react";
-import type { Product, ProductCreateDTO } from "../../models/Product";
+import React from "react";
 import Button from "../atoms/button";
-import { createProduct, updateProduct } from "../../services/productServices";
 import InputLabeled from "../molecules/inputLabeled";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useFormProduct } from "../../utils/useFormProduct";
 
-type FormProductProps = {
-    product?: Product | null;
-    classNameBtn: string;
-}
-
-const FormProduct: React.FC<FormProductProps> = ({
-    product, 
-    classNameBtn, 
-}) => {
-
-    const nav = useNavigate();
-
-    const [data, setData] =  useState < Product > ({
-        id: product?.id || 0,
-        category: product?.category || "",
-        codeCABYS: product?.codeCABYS || "",
-        description: product?.description || "",
-        name: product?.name || "",
-        price: product?.price || 0,
-        quantity: product?.quantity || 0, 
-    })
-
-    const onChangeFields = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type } = event.target;   
-
-        setData((prev) => ({
-            ...prev, 
-            [name]: type === "number" ? Number(value) : value
-        }));
-    }
-
-    async function saveProduct (data: Product ){
-        let result; 
-
-        if(data.id === 0){
-            const temp: ProductCreateDTO = {
-                category: data.category,
-                codeCABYS: data.codeCABYS,
-                description: data.description,
-                name: data.name,
-                price: data.price,
-                quantity: data.quantity, 
-            };
-            result = await createProduct(temp);
-        }else{
-            result = await updateProduct(data); 
-        }   
-
-        if(!result.success){
-            Swal.fire({
-                position: "center",
-                icon: "error",
-                title: result.status == 401 ? 'Login timeout': result.message,
-                showConfirmButton: false,
-                timer: 1500
-            });
-        }
-    }
-
-    const fields = [
-        {
-            label: "Name",
-            placeholder: "Name",
-            value: data.name,
-            type: "text"
-        }, {
-            label: "Description",
-            placeholder: "Description",
-            value: data.description,
-            type: "text"
-        },  {
-            label: "Category",
-            placeholder: "Category",
-            value: data.category,
-            type: "text"
-        }, {
-            label: "Cabys:",
-            placeholder: "Cabys code",
-            value: data.codeCABYS,
-            type: "text"
-        },  {
-            label: "Price:",
-            placeholder: "Price",
-            value: data.price,
-            type: "number"
-        }, {
-            label: "Quantity:",
-            placeholder: "Quantity",
-            value: data.quantity,
-            type: "number"
-        }
-    ];
+const FormProduct: React.FC = () => {
+    const {
+        fields,
+        onChangeFields,
+        saveProduct,
+        redirect, 
+        isBtnSaveActive
+    } = useFormProduct();
 
     return (
         <>
-            <div
-                className="card-form"
-            >
-                {fields.map((field) => (
+            {fields.map((field) => (
+            <>
                 <InputLabeled
+                    key={field.name}
                     labelText={field.label}
                     labelColor="black"
-                    inputName=""
+                    inputName={field.name}
                     inputType= {field.type}
                     inputPlaceHolder={field.placeholder}
                     inputValue={field.value}
                     inputOnChange={onChangeFields}
+                    errorMessage={field.error}
                 />
-                ))}
-
+            </>
+            ))}
+            <div className="felx space-x-4 mt-4">
                 <Button 
-                    label="Guardar"
+                    label="Cancel"
                     color="blue"
-                    className={classNameBtn}
-                    onClick={() => saveProduct(data)}
+                    onClick={redirect}
                 />
-            </div>  
+                <Button 
+                    label="Save"
+                    color="blue"
+                    disabled={!isBtnSaveActive}
+                    onClick={saveProduct}
+                />
+            </div> 
         </>
     );
 }
-
 export default FormProduct;

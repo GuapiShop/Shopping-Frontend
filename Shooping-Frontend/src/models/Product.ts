@@ -14,3 +14,11 @@ export interface ProductCreateDTO {
     codeCABYS: string, 
     price: number
 }
+
+export interface ErrorProductDTO {
+    name: string, 
+    description: string, 
+    category: string, 
+    codeCABYS: string, 
+    price: string
+}
