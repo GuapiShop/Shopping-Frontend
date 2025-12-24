@@ -68,12 +68,42 @@ export async function updateProduct ( product: Product ): Promise<ApiResponse<Pr
 }
 
 /*
-* endpoint delete a single product
-* DELETE: /api/Products/id
+* endpoint inactivate a single product
+* UPDATE: /api/Products/id
 */
-export async function disableProduct(id: number): Promise<ApiResponse<Product>> {
+export const disableProduct = async(id: number): Promise<ApiResponse<Product>> => {
     try {
-        const result = await axios.delete(apiProduct + `/${id}`, {
+        const result = await axios.put(apiProduct + `/${id}`, {
+            headers: authHeathers()
+        });
+        return {
+            data: result.data, 
+            status: result.status,
+            success: true
+        };
+    } catch (error) {
+        let message = "Unkown error."
+        let status = 500;
+
+        if(axios.isAxiosError(error)){
+            message = error.response?.data;
+            status =  error.response?.status || 500;
+        }   
+        return {
+            message: message, 
+            status: status, 
+            success: false
+        } 
+    }    
+}
+
+/*
+* endpoint activate a single product
+* UPDATE: /api/Products/id
+*/
+export const enableProduct = async(id: number): Promise<ApiResponse<Product>> => {
+    try {
+        const result = await axios.put(apiProduct + `/${id}`, {
             headers: authHeathers()
         });
         return {

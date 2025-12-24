@@ -14,6 +14,7 @@ const TemplateListProduct: React.FC = () => {
         changePreviousPage, 
         changeNextPage,
         disable,
+        enable
     } = useListProduct();
 
     return(
@@ -31,6 +32,7 @@ const TemplateListProduct: React.FC = () => {
                             arrayHeader={header}
                             arrayRows={row}
                             onDisable={disable}
+                            onEnable={enable}
                         />
                         <Pagination 
                             page={page}

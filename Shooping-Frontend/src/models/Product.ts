@@ -4,7 +4,8 @@ export interface Product {
     description: string, 
     category: string, 
     codeCABYS: string, 
-    price: number
+    price: number, 
+    isActive: boolean
 }
 
 export interface ProductCreateDTO {

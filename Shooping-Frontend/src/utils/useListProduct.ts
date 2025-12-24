@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Product } from "../models/Product";
-import { getAllProducts } from "../services/productServices"
+import { enableProduct, getAllProducts } from "../services/productServices"
 import { disableProduct } from "../services/productServices"
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
 import type { ApiResponse } from "../models/ApiResponse";
@@ -17,6 +17,7 @@ export const useListProduct = () => {
         "Category", 
         "Price", 
         "Code",
+        "Is Active", 
         "Actions"
     ]
 
@@ -55,6 +56,19 @@ export const useListProduct = () => {
         return result;
     }
 
+    const enable = async (id: number) : Promise<ApiResponse> => {
+        const result = await enableProduct(id);
+        if (result.success) {
+            await fetchProducts()
+            modalSuccess("Disabled", "Product successfully disabled.")
+        } else if (result.status===404) {
+            modalWarning("Warning", result.message)
+        } else {
+            modalError("Error", "Error in server.")
+        }
+        return result;
+    }
+
     return {
         header, 
         row, 
@@ -62,6 +76,7 @@ export const useListProduct = () => {
         totalPage,
         changePreviousPage, 
         changeNextPage, 
-        disable
+        disable, 
+        enable
     }
 }
