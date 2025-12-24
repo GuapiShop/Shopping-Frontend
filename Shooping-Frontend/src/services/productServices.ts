@@ -71,7 +71,7 @@ export async function updateProduct ( product: Product ): Promise<ApiResponse<Pr
 * endpoint delete a single product
 * DELETE: /api/Products/id
 */
-export async function deleteProduct(id: number): Promise<ApiResponse<Product>> {
+export async function disableProduct(id: number): Promise<ApiResponse<Product>> {
     try {
         const result = await axios.delete(apiProduct + `/${id}`, {
             headers: authHeathers()

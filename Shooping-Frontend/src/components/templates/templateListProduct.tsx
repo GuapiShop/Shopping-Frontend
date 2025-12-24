@@ -12,7 +12,8 @@ const TemplateListProduct: React.FC = () => {
         page, 
         totalPage,
         changePreviousPage, 
-        changeNextPage
+        changeNextPage,
+        disable,
     } = useListProduct();
 
     return(
@@ -29,6 +30,7 @@ const TemplateListProduct: React.FC = () => {
                         <TableProduct 
                             arrayHeader={header}
                             arrayRows={row}
+                            onDisable={disable}
                         />
                         <Pagination 
                             page={page}

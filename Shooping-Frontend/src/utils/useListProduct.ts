@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Product } from "../models/Product";
 import { getAllProducts } from "../services/productServices"
+import { disableProduct } from "../services/productServices"
+import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
+import type { ApiResponse } from "../models/ApiResponse";
 
 export const useListProduct = () => {
     const pagSize = 10;
@@ -39,12 +42,26 @@ export const useListProduct = () => {
         setPage(prev => prev < totalPage ? prev+1 : totalPage )
     }
 
+    const disable = async (id: number) : Promise<ApiResponse> => {
+        const result = await disableProduct(id);
+        if (result.success) {
+            await fetchProducts()
+            modalSuccess("Disabled", "Product successfully disabled.")
+        } else if (result.status === 404) {
+            modalWarning("Warning", result.message)
+        } else {
+            modalError("Error", "Error in server.")
+        }
+        return result;
+    }
+
     return {
         header, 
         row, 
         page, 
         totalPage,
         changePreviousPage, 
-        changeNextPage
+        changeNextPage, 
+        disable
     }
 }
