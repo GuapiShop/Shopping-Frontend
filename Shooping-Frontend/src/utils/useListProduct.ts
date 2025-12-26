@@ -77,6 +77,7 @@ export const useListProduct = () => {
         changePreviousPage, 
         changeNextPage, 
         disable, 
-        enable
+        enable, 
+        fetchProducts
     }
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Product, ProductCreateDTO } from "../models/Product";
+import type { Product, ProductCreateDTO, ProductUpdateDTO } from "../models/Product";
 import { authHeathers } from "./authService";
 import { handleAxiosError, handleAxiosErrorPaginated } from "./errorsHandler";
 import type { ApiResponse, ApiPaginated } from "../models/ApiResponse";
@@ -40,7 +40,7 @@ export async function createProduct ( product: ProductCreateDTO ): Promise<ApiRe
 * endpoint update a product
 * PUT: /api/Products/id
 */
-export async function updateProduct ( product: Product ): Promise<ApiResponse<Product>> {
+export async function updateProduct ( product: ProductUpdateDTO ): Promise<ApiResponse<Product>> {
     try {
         const result = await axios.put(apiProduct +`/${product.id}`, product, {
            headers: authHeathers()

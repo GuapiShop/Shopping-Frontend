@@ -3,6 +3,7 @@ import { useListProduct } from "../../utils/useListProduct";
 import TableProduct from "../organisms/tableProduct";
 import Pagination from "../molecules/pagination";
 import Link from "../atoms/link";
+import { useEditProduct } from "../../utils/useEditProduct";
 
 const TemplateListProduct: React.FC = () => {
 
@@ -14,8 +15,19 @@ const TemplateListProduct: React.FC = () => {
         changePreviousPage, 
         changeNextPage,
         disable,
-        enable
+        enable, 
+        fetchProducts
     } = useListProduct();
+
+    const {
+        idEdit, 
+        editProduct, 
+        setEditProduct,
+        removeEditProduct, 
+        onChangeFields, 
+        handleUpdateUser,
+        error,
+    } = useEditProduct(fetchProducts);
 
     return(
         <>
@@ -31,8 +43,15 @@ const TemplateListProduct: React.FC = () => {
                         <TableProduct 
                             arrayHeader={header}
                             arrayRows={row}
+                            idEdit={idEdit}
+                            editProduct={editProduct}
+                            error={error}
+                            setEditProduct={setEditProduct}
+                            removeEditProduct={removeEditProduct}
+                            handleUpdateProduct={handleUpdateUser}
                             onDisable={disable}
                             onEnable={enable}
+                            onChangeFields={onChangeFields}
                         />
                         <Pagination 
                             page={page}

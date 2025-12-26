@@ -16,6 +16,15 @@ export interface ProductCreateDTO {
     price: number
 }
 
+export interface ProductUpdateDTO {
+    id: number, 
+    name: string, 
+    description: string, 
+    category: string, 
+    codeCABYS: string, 
+    price: number
+}
+
 export interface ErrorProductDTO {
     name: string, 
     description: string, 
