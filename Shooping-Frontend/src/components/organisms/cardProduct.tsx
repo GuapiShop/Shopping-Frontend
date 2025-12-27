@@ -40,7 +40,7 @@ const CardProduct: React.FC<CardProductProps> = ({
 
                 <ParagraphHeaded 
                     label="Code"
-                    paragraph={product.codeCABYS.toString()}
+                    paragraph={product.codeCabys.toString()}
                     labelClassName=""
                     paragraphClassName=""
                 />

@@ -132,12 +132,12 @@ const TableProduct: React.FC<TableProductProps> = ({
                                                 name="codeCABYS"
                                                 type="text"
                                                 onChange={onChangeFields}
-                                                value={editProduct.codeCABYS}
+                                                value={editProduct.codeCabys}
                                                 placeholder="Code CABYS"
                                             />
-                                            {error.codeCABYS && 
+                                            {error.codeCabys && 
                                                 <ErrorMessage 
-                                                    message={error.codeCABYS}
+                                                    message={error.codeCabys}
                                                 />
                                             }
                                         </div>
@@ -145,7 +145,7 @@ const TableProduct: React.FC<TableProductProps> = ({
                                     <td className="px-2 py-2 text-lg">{product.isActive ? "Yes" : "No"}</td>
                                     <td className="flex justify-center px-2 py-2 text-lg">
                                         <ButtonSave 
-                                            isDisabled={error.name!==""||error.description!==""||error.category!==""||error.codeCABYS!==""||error.price!==""}
+                                            isDisabled={error.name!==""||error.description!==""||error.category!==""||error.codeCabys!==""||error.price!==""}
                                             onSave={() => handleUpdateProduct()}
                                         />
                                         <ButtonCancel
@@ -159,7 +159,7 @@ const TableProduct: React.FC<TableProductProps> = ({
                                     <td className="px-2 py-2 text-lg">{product.description}</td>
                                     <td className="px-2 py-2 text-lg">{product.category}</td>
                                     <td className="px-2 py-2 text-lg">{product.price}</td>
-                                    <td className="px-2 py-2 text-lg">{product.codeCABYS}</td>
+                                    <td className="px-2 py-2 text-lg">{product.codeCabys}</td>
                                     <td className="px-2 py-2 text-lg">{product.isActive ? "Yes" : "No"}</td>
                                     <td className="flex justify-center px-2 py-2 text-lg">
                                         <ButtonEdit

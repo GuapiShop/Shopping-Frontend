@@ -6,7 +6,7 @@ import { modalError, modalSuccess, modalWarning } from "../components/organisms/
 import type { ApiResponse } from "../models/ApiResponse";
 
 export const useListProduct = () => {
-    const pagSize = 10;
+    const pageSize = 10;
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(1); 
     const [row, setRow ]= useState<Product[]>();
@@ -22,14 +22,13 @@ export const useListProduct = () => {
     ]
 
     const fetchProducts = useCallback(async() => {
-        const data = await getAllProducts(page, totalPage);
-
+        const data = await getAllProducts(page, pageSize);
+        console.log("resume", data)
         if(data.success){
             setRow(data.data)
-            setPage(data.page)
             setTotalPage(data.totalPage)
         }
-    }, [page, pagSize])
+    }, [page])
 
     useEffect(() => {
         fetchProducts();
@@ -60,7 +59,7 @@ export const useListProduct = () => {
         const result = await enableProduct(id);
         if (result.success) {
             await fetchProducts()
-            modalSuccess("Disabled", "Product successfully disabled.")
+            modalSuccess("Enabled", "Product successfully enabled.")
         } else if (result.status===404) {
             modalWarning("Warning", result.message)
         } else {

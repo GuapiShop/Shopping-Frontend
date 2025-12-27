@@ -4,7 +4,7 @@ import { authHeathers } from "./authService";
 import { handleAxiosError, handleAxiosErrorPaginated } from "./errorsHandler";
 import type { ApiResponse, ApiPaginated } from "../models/ApiResponse";
 
-const apiProduct = "https://localhost:7176/api/Products/";
+const apiProduct = "https://localhost:7176/api/Products";
 
 /*
 * endpoint create a product
@@ -51,7 +51,7 @@ export async function updateProduct (product:ProductUpdateDTO) : Promise<ApiResp
 */
 export const disableProduct = async(id: number) : Promise<ApiResponse<Product>> => {
     try {
-        const result = await axios.put(apiProduct + `/${id}`, {
+        const result = await axios.put(apiProduct + `/disable/${id}`, null, {
             headers: authHeathers()
         });
         return {
@@ -70,7 +70,7 @@ export const disableProduct = async(id: number) : Promise<ApiResponse<Product>> 
 */
 export const enableProduct = async(id:number) : Promise<ApiResponse<Product>> => {
     try {
-        const result = await axios.put(apiProduct + `/${id}`, {
+        const result = await axios.put(apiProduct + `/enable/${id}`, null, {
             headers: authHeathers()
         });
         return {
@@ -95,7 +95,7 @@ export async function getAllProducts(page:number, pageSize:number) : Promise<Api
         return { 
             page: result.data.page,
             totalPage: result.data.totalPage,
-            data: result.data.data, 
+            data: result.data.data,
             success: true, 
             status: result.status,
         }

@@ -3,7 +3,7 @@ export interface Product {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
+    codeCabys: string, 
     price: number, 
     isActive: boolean
 }
@@ -12,7 +12,7 @@ export interface ProductCreateDTO {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
+    codeCabys: string, 
     price: number
 }
 
@@ -21,7 +21,7 @@ export interface ProductUpdateDTO {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
+    codeCabys: string, 
     price: number
 }
 
@@ -29,6 +29,6 @@ export interface ErrorProductDTO {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
+    codeCabys: string, 
     price: string
 }

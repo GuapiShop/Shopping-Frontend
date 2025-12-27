@@ -14,14 +14,14 @@ export const useEditProduct = (
         name: "",
         description: "",  
         category: "", 
-        codeCABYS: "", 
+        codeCabys: "", 
         price: 0
     })
     const [error, setError] = useState<ErrorProductDTO> ({ 
         name: "",
         description: "",  
         category: "", 
-        codeCABYS: "", 
+        codeCabys: "", 
         price: "",
     })
     const setEditProduct = (product:ProductUpdateDTO) => {
@@ -35,14 +35,14 @@ export const useEditProduct = (
             name: "",
             description: "",  
             category: "", 
-            codeCABYS: "", 
+            codeCabys: "", 
             price: 0
         })
         setError({
             name: "",
             description: "",  
             category: "", 
-            codeCABYS: "", 
+            codeCabys: "", 
             price: ""
         })
     }
@@ -77,7 +77,7 @@ export const useEditProduct = (
         } else if (name === "codeCABYS") {
             setError((prev) => ({  
                 ...prev,
-                codeCABYS: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
+                codeCabys: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
             }))
         } else if (name === "price") {
             setError((prev) => ({  

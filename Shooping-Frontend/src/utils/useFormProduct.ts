@@ -15,7 +15,7 @@ export const useFormProduct = () => {
         description: "",
         category: "", 
         price: 0,
-        codeCABYS: "",   
+        codeCabys: "",   
     })
 
     const [error, setError] = useState<ErrorProductDTO>({
@@ -23,7 +23,7 @@ export const useFormProduct = () => {
         description: "",
         category: "", 
         price: "",
-        codeCABYS: "",
+        codeCabys: "",
     }) 
 
     const fields = [
@@ -52,9 +52,9 @@ export const useFormProduct = () => {
             label: "Cabys",
             name: "codeCABYS",
             placeholder: "Cabys code",
-            value: data.codeCABYS,
+            value: data.codeCabys,
             type: "text", 
-            error: error.codeCABYS
+            error: error.codeCabys
         },  {
             label: "Price:",
             name: "price",
@@ -88,7 +88,7 @@ export const useFormProduct = () => {
         } else if (name === "codeCABYS") {
             setError((prev) => ({  
                 ...prev,
-                codeCABYS: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
+                codeCabys: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
             }))
         } else if (name === "price") {
             setError((prev) => ({  
@@ -121,8 +121,8 @@ export const useFormProduct = () => {
 
     // if there are no errors and all fields are filled, enable the save button
     useEffect(() => {
-        const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCABYS === '' && error.price === '';
-        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCABYS !== '' && data.price !== 0;
+        const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCabys === '' && error.price === '';
+        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCabys !== '' && data.price !== 0;
         setIsBtnSaveActive(allFieldsFilled && noErrors);
     }, [error, data]);
 
