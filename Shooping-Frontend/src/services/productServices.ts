@@ -10,7 +10,7 @@ const apiProduct = "https://localhost:7176/api/Products/";
 * endpoint create a product
 * POST: /api/Products
 */
-export async function createProduct ( product: ProductCreateDTO ): Promise<ApiResponse<Product>> {
+export async function createProduct (product:ProductCreateDTO) : Promise<ApiResponse<Product>> {
     try {
         const result = await axios.post(apiProduct, product, {
             headers: authHeathers()
@@ -21,18 +21,7 @@ export async function createProduct ( product: ProductCreateDTO ): Promise<ApiRe
             success: true
         }
     } catch (error) {
-        let message = "Unkown error."
-        let status = 500;
-
-        if(axios.isAxiosError(error)){
-            message = error.response?.data;
-            status =  error.response?.status || 500;
-        }   
-        return {
-            message: message, 
-            status: status, 
-            success: false
-        } 
+        return handleAxiosError(error);
     }
 }
 
@@ -40,7 +29,7 @@ export async function createProduct ( product: ProductCreateDTO ): Promise<ApiRe
 * endpoint update a product
 * PUT: /api/Products/id
 */
-export async function updateProduct ( product: ProductUpdateDTO ): Promise<ApiResponse<Product>> {
+export async function updateProduct (product:ProductUpdateDTO) : Promise<ApiResponse<Product>> {
     try {
         const result = await axios.put(apiProduct +`/${product.id}`, product, {
            headers: authHeathers()
@@ -52,18 +41,7 @@ export async function updateProduct ( product: ProductUpdateDTO ): Promise<ApiRe
             status: result.status
         }
     } catch (error) {
-        let message = "Unkown error."
-        let status = 500;
-
-        if(axios.isAxiosError(error)){
-            message = error.response?.data;
-            status =  error.response?.status || 500;
-        }   
-        return {
-            message: message, 
-            status: status, 
-            success: false
-        } 
+        return handleAxiosError(error); 
     }
 }
 
@@ -71,7 +49,7 @@ export async function updateProduct ( product: ProductUpdateDTO ): Promise<ApiRe
 * endpoint inactivate a single product
 * UPDATE: /api/Products/id
 */
-export const disableProduct = async(id: number): Promise<ApiResponse<Product>> => {
+export const disableProduct = async(id: number) : Promise<ApiResponse<Product>> => {
     try {
         const result = await axios.put(apiProduct + `/${id}`, {
             headers: authHeathers()
@@ -82,18 +60,7 @@ export const disableProduct = async(id: number): Promise<ApiResponse<Product>> =
             success: true
         };
     } catch (error) {
-        let message = "Unkown error."
-        let status = 500;
-
-        if(axios.isAxiosError(error)){
-            message = error.response?.data;
-            status =  error.response?.status || 500;
-        }   
-        return {
-            message: message, 
-            status: status, 
-            success: false
-        } 
+        return handleAxiosError(error);
     }    
 }
 
@@ -101,7 +68,7 @@ export const disableProduct = async(id: number): Promise<ApiResponse<Product>> =
 * endpoint activate a single product
 * UPDATE: /api/Products/id
 */
-export const enableProduct = async(id: number): Promise<ApiResponse<Product>> => {
+export const enableProduct = async(id:number) : Promise<ApiResponse<Product>> => {
     try {
         const result = await axios.put(apiProduct + `/${id}`, {
             headers: authHeathers()
@@ -112,18 +79,7 @@ export const enableProduct = async(id: number): Promise<ApiResponse<Product>> =>
             success: true
         };
     } catch (error) {
-        let message = "Unkown error."
-        let status = 500;
-
-        if(axios.isAxiosError(error)){
-            message = error.response?.data;
-            status =  error.response?.status || 500;
-        }   
-        return {
-            message: message, 
-            status: status, 
-            success: false
-        } 
+        return handleAxiosError(error);
     }    
 }
 
@@ -131,7 +87,7 @@ export const enableProduct = async(id: number): Promise<ApiResponse<Product>> =>
 * endpoint get a list of products
 * GET: /api/Products
 */
-export async function getAllProducts(page: number, pageSize: number) : Promise<ApiPaginated<Product[]>>{
+export async function getAllProducts(page:number, pageSize:number) : Promise<ApiPaginated<Product[]>>{
     try {
         const result = await axios.get(apiProduct +`?page=${page}&pageSize=${pageSize}`, {
             headers: authHeathers()
@@ -152,7 +108,7 @@ export async function getAllProducts(page: number, pageSize: number) : Promise<A
 * endpoint get a single product
 * GET: /api/Products/id
 */
-export async function getProduct(id: number): Promise<ApiResponse<Product>> {
+export async function getProduct(id:number) : Promise<ApiResponse<Product>> {
     try {
         const result = await axios.get(apiProduct + `/${id}`, {
             headers: authHeathers()
@@ -163,17 +119,6 @@ export async function getProduct(id: number): Promise<ApiResponse<Product>> {
             success: true
         }
     } catch (error) {
-        let message = "Unkown error."
-        let status = 500;
-
-        if(axios.isAxiosError(error)){
-            message = error.response?.data;
-            status =  error.response?.status || 500;
-        }   
-        return {
-            message: message, 
-            status: status, 
-            success: false
-        } 
+        return handleAxiosError(error);
     }
 }

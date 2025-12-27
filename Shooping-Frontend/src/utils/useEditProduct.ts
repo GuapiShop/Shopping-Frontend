@@ -3,11 +3,11 @@ import type { ProductUpdateDTO, ErrorProductDTO } from "../models/Product";
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
 import { updateProduct } from "../services/productServices";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
+import { validateProductCodeCABYS, validateProductDescription, validateProductName } from "./validateFormProduct";
 
 export const useEditProduct = (
     onUpdated: () => Promise<void>
 ) => {
-
     const [idEdit, setIdEdit] = useState<number|null>(null)
     const [editProduct, setProduct] = useState<ProductUpdateDTO> ({
         id:0, 
@@ -24,12 +24,10 @@ export const useEditProduct = (
         codeCABYS: "", 
         price: "",
     })
-
     const setEditProduct = (product:ProductUpdateDTO) => {
         setIdEdit(product.id); 
         setProduct(product);
     }
-
     const removeEditProduct = () => {
         setIdEdit(null)
         setProduct({
@@ -48,7 +46,6 @@ export const useEditProduct = (
             price: ""
         })
     }
-
     const handleUpdateUser = async () => {
         const result = await updateProduct(editProduct);
         if (result.success) {
@@ -61,17 +58,16 @@ export const useEditProduct = (
             modalError("Error", "Error in server.")
         }
     }
-
-    function fieldsValidations( name: string, value: string ) {
+    const fieldsValidations = ( name: string, value: string ) => {
         if (name === "name") {
             setError((prev) => ({
                 ...prev,
-                name: validateEmptyField(value) || ''
+                name: validateEmptyField(value) || validateProductName(value) || ''
             }));
         } else if (name === "description") {
             setError((prev) => ({  
                 ...prev,
-                description: validateEmptyField(value) || ''
+                description: validateEmptyField(value) || validateProductDescription(value) || ''
             }))
         } else if (name === "category") {
             setError((prev) => ({  
@@ -81,16 +77,15 @@ export const useEditProduct = (
         } else if (name === "codeCABYS") {
             setError((prev) => ({  
                 ...prev,
-                codeCABYS: validateEmptyField(value) || ''
-            })) 
+                codeCABYS: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
+            }))
         } else if (name === "price") {
             setError((prev) => ({  
                 ...prev,
-                price: validateOnlyNumbers(value) || validateNumberLessZero(Number(value)) || ''
+                price: validateNumberLessZero(Number(value)) || validateOnlyNumbers(value) ||''
             }))
-        } 
+        }
     } 
-
     const onChangeFields = (event:React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         fieldsValidations(name, value);
@@ -99,7 +94,6 @@ export const useEditProduct = (
             [name]: value
         }));
     }
-
     return {
         idEdit, 
         editProduct, 
@@ -107,6 +101,6 @@ export const useEditProduct = (
         removeEditProduct, 
         onChangeFields, 
         handleUpdateUser,
-        error
+        error,
     };
 }
