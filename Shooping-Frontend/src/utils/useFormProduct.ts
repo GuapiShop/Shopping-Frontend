@@ -6,11 +6,13 @@ import { createProduct } from "../services/productServices";
 import { getCabys } from "../services/cabysService"
 import { modalError, modalSuccess } from "../components/organisms/modalNotify";
 import { validateProductCodeCABYS, validateProductDescription, validateProductName } from "./validateFormProduct";
-import type { Cabys, CabysProduct } from "../models/cabys";
+import type { Cabys } from "../models/cabys";
 
 export const useFormProduct = () => {
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
+    const [selectedCabys, setSelectedCabys] = useState<string>("");
+
     const [isBtnSaveActive, setIsBtnSaveActive] = useState<boolean>(false);
 
     const [cabysData, setCabysData] = useState<Cabys> ({
@@ -18,7 +20,6 @@ export const useFormProduct = () => {
         quantity: 0,
         total: 0
     });
-
 
     const [data, setData] = useState<ProductCreateDTO> ({
         name: "",
@@ -148,6 +149,21 @@ export const useFormProduct = () => {
         }
     }
 
+    const onChangeCabys = (value: string) => {
+        setSelectedCabys(value);
+        const selected = cabysData.cabys.find(cabys => cabys.code === value);
+        if (selected) {
+            setData((prev) => ({
+                ...prev,
+                codeCabys: selected.code,
+                descriptionCabys: selected.description,
+                taxCabys: selected.tax
+            }));
+        }
+
+        console.log(data);
+    }
+
     // if there are no errors and all fields are filled, enable the save button
     useEffect(() => {
         const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCabys === '' && error.price === '' && error.descriptionCabys === '' && error.taxCabys === '';
@@ -159,6 +175,8 @@ export const useFormProduct = () => {
         fields, 
 
         cabysData, 
+        selectedCabys, 
+        onChangeCabys,
 
         search, 
         onChangeSearch,

@@ -3,14 +3,15 @@ import Button from "../atoms/button";
 import Input from "../atoms/input";
 import InputLabeled from "../molecules/inputLabeled";
 import { useFormProduct } from "../../utils/useFormProduct";
-import Label from "../atoms/label";
+import Select from "../molecules/select";
+import type { CabysProduct } from "../../models/cabys";
 
 const FormProduct: React.FC = () => {
     const {
         fields,
-
         cabysData,
-
+        selectedCabys,
+        onChangeCabys,
         search, 
         onChangeSearch, 
         onChangeFields,
@@ -40,13 +41,17 @@ const FormProduct: React.FC = () => {
 
             <div className="">
                 {/* Code, description and tax */}
-                {cabysData.cabys.map((cabysProduct) => (
-                <>
-                    <Label 
-                        text={cabysProduct.code+' '+cabysProduct.description+' Tax: '+cabysProduct.tax+'%'}
-                    />
-                </>
-                ))}
+                <Select
+                    message="Select a Cabys code"
+                    value={selectedCabys}
+                    onChange={onChangeCabys}
+                    options={
+                        cabysData.cabys.map((cabys: CabysProduct) => ({
+                            value: cabys.code,
+                            label: `${cabys.code} - ${cabys.description} - ${cabys.tax}%`
+                        }))
+                    }
+                />
             </div>
 
             {fields.map((field) => (
