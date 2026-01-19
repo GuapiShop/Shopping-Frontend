@@ -2,21 +2,18 @@ import React from "react";
 
 type ButtonProps = {
     label: string;
-    color: string;
     disabled?: boolean;
     onClick: () => void;
 };
 
 const Button: React.FC<ButtonProps> = ({ 
     label, 
-    color, 
     disabled, 
     onClick 
 }) => {
     return(
         <>
             <button
-                color={color}
                 disabled={disabled}
                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:opacity-70 disabled:cursor-not-allowed hover:cursor-pointer"
                 onClick={onClick}

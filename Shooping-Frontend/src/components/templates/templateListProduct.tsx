@@ -4,6 +4,7 @@ import TableProduct from "../organisms/tableProduct";
 import Pagination from "../molecules/pagination";
 import Link from "../atoms/link";
 import { useEditProduct } from "../../utils/useEditProduct";
+import Button from "../atoms/button";
 
 const TemplateListProduct: React.FC = () => {
 
@@ -16,7 +17,8 @@ const TemplateListProduct: React.FC = () => {
         changeNextPage,
         disable,
         enable, 
-        fetchProducts
+        fetchProducts, 
+        redirect, 
     } = useListProduct();
 
     const {
@@ -35,6 +37,12 @@ const TemplateListProduct: React.FC = () => {
                 <>
                     <div className="flex mx-30">
                         <h1 className="text-3xl font-semibold justify-items-start py-4">Products</h1>
+                        <div className="flex justify-end w-full py-4">
+                            <Button 
+                                label="Add Product"
+                                onClick={redirect}
+                            />
+                        </div> 
                     </div>
 
                     <div

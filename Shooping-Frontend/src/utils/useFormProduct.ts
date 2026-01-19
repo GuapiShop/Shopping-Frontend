@@ -57,13 +57,6 @@ export const useFormProduct = () => {
             type: "text", 
             error: error.description
         },{
-            label: "Category",
-            name: "category",
-            placeholder: "Category",
-            value: data.category,
-            type: "text", 
-            error: error.category
-        },{
             label: "Price:",
             name: "price",
             placeholder: "Price",
@@ -73,8 +66,43 @@ export const useFormProduct = () => {
         }
     ];
 
+    const category = [
+        { value: "Electronics", label: "Electronics" },
+        { value: "Clothing", label: "Clothing" },
+        { value: "Books", label: "Books" },
+        { value: "Home", label: "Home" },
+        { value: "Sports", label: "Sports" },
+        { value: "Toys", label: "Toys" },
+        { value: "Beauty", label: "Beauty" },
+        { value: "Automotive", label: "Automotive" },
+        { value: "Grocery", label: "Grocery" },
+        { value: "Health", label: "Health" },
+    ]
+
+    const selectFields = [
+         {
+            label: "CABYS Code",
+            name: "codeCabys",
+            options: cabysData.cabys.map((cabys) => ({
+                value: cabys.code,
+                label: `${cabys.code} - ${cabys.description} - ${cabys.tax}%`
+            })),
+            placeholder: "Select a CABYS code",
+            value: selectedCabys,
+            error: error.codeCabys
+        } ,
+        {
+            label: "Category",
+            name: "category",
+            options: category,
+            placeholder: "Select a category",
+            value: data.category,
+            error: error.category
+        }
+    ];
+
     const redirect = () => {
-        navigate('/products');
+        navigate('/product');
     }
 
     const fieldsValidations = ( name: string, value: string ) => { 
@@ -93,15 +121,15 @@ export const useFormProduct = () => {
                 ...prev,
                 category: validateEmptyField(value) || ''
             }))
-        } else if (name === "codeCABYS") {
-            setError((prev) => ({  
-                ...prev,
-                codeCabys: validateEmptyField(value) || validateProductCodeCABYS(value) || ''
-            }))
         } else if (name === "price") {
             setError((prev) => ({  
                 ...prev,
                 price: validateNumberLessZero(Number(value)) || validateOnlyNumbers(value) ||''
+            }))
+        } else if (name === "codeCabys") {
+            setError((prev) => ({  
+                ...prev,
+                codeCabys: validateEmptyField(value) || ''
             }))
         }
     }
@@ -149,35 +177,40 @@ export const useFormProduct = () => {
         }
     }
 
-    const onChangeCabys = (value: string) => {
-        setSelectedCabys(value);
-        const selected = cabysData.cabys.find(cabys => cabys.code === value);
-        if (selected) {
+    const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = event.target; 
+        fieldsValidations(name, value);
+
+        if (name === "category") {
             setData((prev) => ({
                 ...prev,
-                codeCabys: selected.code,
-                descriptionCabys: selected.description,
-                taxCabys: selected.tax
+                category: value
             }));
+        } else if (name === "codeCabys") {
+            setSelectedCabys(value);
+            const selected = cabysData.cabys.find(cabys => cabys.code === value);
+            if (selected) {
+                setData((prev) => ({
+                    ...prev,
+                    codeCabys: selected.code,
+                    descriptionCabys: selected.description,
+                    taxCabys: selected.tax
+                }));
+            }
         }
-
-        console.log(data);
     }
 
     // if there are no errors and all fields are filled, enable the save button
     useEffect(() => {
         const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCabys === '' && error.price === '' && error.descriptionCabys === '' && error.taxCabys === '';
-        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCabys !== '' && data.price !== 0 && data.descriptionCabys === '' && data.taxCabys === 0;
+        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCabys !== '' && data.price !== 0 && data.descriptionCabys !== '' && data.taxCabys !== 0;
         setIsBtnSaveActive(allFieldsFilled && noErrors);
     }, [error, data]);
 
     return {
         fields, 
-
-        cabysData, 
-        selectedCabys, 
-        onChangeCabys,
-
+        selectFields, 
+        onChangeSelect,
         search, 
         onChangeSearch,
         onChangeFields,

@@ -4,8 +4,10 @@ import { enableProduct, getAllProducts } from "../services/productServices"
 import { disableProduct } from "../services/productServices"
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
 import type { ApiResponse } from "../models/ApiResponse";
+import { useNavigate } from "react-router";
 
 export const useListProduct = () => {
+    const navigate = useNavigate();
     const pageSize = 10;
     const [page, setPage] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(1); 
@@ -67,6 +69,10 @@ export const useListProduct = () => {
         return result;
     }
 
+    const redirect = () => {
+        navigate('/product/add');
+    }
+
     return {
         header, 
         row, 
@@ -76,6 +82,7 @@ export const useListProduct = () => {
         changeNextPage, 
         disable, 
         enable, 
-        fetchProducts
+        fetchProducts, 
+        redirect,
     }
 }

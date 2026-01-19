@@ -11,7 +11,7 @@ const LinkGroup: React.FC = () => {
           // admin links
           <>
             <LinkHeader label="Users" link="/user" />
-            <LinkHeader label="Products" link="/product/add" />
+            <LinkHeader label="Products" link="/product" />
           </>
         ) : (
           // customers links

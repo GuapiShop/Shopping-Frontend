@@ -33,12 +33,10 @@ const FormUser: React.FC = () => {
             <div className="felx space-x-4 mt-4">
                 <Button 
                     label="Cancel"
-                    color="blue"
                     onClick={redirect}
                 />
                 <Button 
                     label="Save"
-                    color="blue"
                     disabled={!isBtnSaveActive}
                     onClick={saveUser}
                 />
