@@ -11,11 +11,11 @@ const LinkGroup: React.FC = () => {
           // admin links
           <>
             <LinkHeader label="Users" link="/user" />
+            <LinkHeader label="Products" link="/product/add" />
           </>
         ) : (
           // customers links
           <>
-            <LinkHeader label="Products" link="/product" />
           </>
         )}
     </div>

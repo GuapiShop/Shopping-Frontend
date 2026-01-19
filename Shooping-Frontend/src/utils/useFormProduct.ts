@@ -3,19 +3,31 @@ import { useNavigate } from "react-router-dom"
 import type { ErrorProductDTO, ProductCreateDTO } from "../models/Product";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
 import { createProduct } from "../services/productServices";
+import { getCabys } from "../services/cabysService"
 import { modalError, modalSuccess } from "../components/organisms/modalNotify";
 import { validateProductCodeCABYS, validateProductDescription, validateProductName } from "./validateFormProduct";
+import type { Cabys, CabysProduct } from "../models/cabys";
 
 export const useFormProduct = () => {
     const navigate = useNavigate();
+    const [search, setSearch] = useState("");
     const [isBtnSaveActive, setIsBtnSaveActive] = useState<boolean>(false);
+
+    const [cabysData, setCabysData] = useState<Cabys> ({
+        cabys: [],
+        quantity: 0,
+        total: 0
+    });
+
 
     const [data, setData] = useState<ProductCreateDTO> ({
         name: "",
         description: "",
         category: "", 
         price: 0,
-        codeCabys: "",   
+        codeCabys: "",  
+        descriptionCabys: "", 
+        taxCabys: 0 
     })
 
     const [error, setError] = useState<ErrorProductDTO>({
@@ -24,6 +36,8 @@ export const useFormProduct = () => {
         category: "", 
         price: "",
         codeCabys: "",
+        descriptionCabys: "", 
+        taxCabys: ""
     }) 
 
     const fields = [
@@ -34,28 +48,21 @@ export const useFormProduct = () => {
             value: data.name,
             type: "text", 
             error: error.name
-        }, {
+        },{
             label: "Description",
             name: "description",
             placeholder: "Description",
             value: data.description,
             type: "text", 
             error: error.description
-        },  {
+        },{
             label: "Category",
             name: "category",
             placeholder: "Category",
             value: data.category,
             type: "text", 
             error: error.category
-        }, {
-            label: "Cabys",
-            name: "codeCABYS",
-            placeholder: "Cabys code",
-            value: data.codeCabys,
-            type: "text", 
-            error: error.codeCabys
-        },  {
+        },{
             label: "Price:",
             name: "price",
             placeholder: "Price",
@@ -65,11 +72,11 @@ export const useFormProduct = () => {
         }
     ];
 
-    function redirect () {
+    const redirect = () => {
         navigate('/products');
     }
 
-    function fieldsValidations( name: string, value: string ) { 
+    const fieldsValidations = ( name: string, value: string ) => { 
         if (name === "name") {
             setError((prev) => ({
                 ...prev,
@@ -107,7 +114,7 @@ export const useFormProduct = () => {
         }));
     }
 
-    async function saveProduct(){
+    const saveProduct = async() => {
         let result = await createProduct(data);
         if(result.success){
             modalSuccess("Created", "Product successfully created.")
@@ -119,18 +126,46 @@ export const useFormProduct = () => {
         }
     }
 
+    const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {        
+        const { name, value } = event.target; 
+        if (name==='search'){
+            setSearch(value);
+        }   
+    }
+
+    const searchCabys = async() => {
+        const data = await getCabys(search);
+        if (data && data.quantity > 0) {
+            setCabysData({
+                cabys: data.products.map((product:any) => ({
+                    code: product.codigo,
+                    description: product.descripcion,
+                    tax: product.impuesto
+                })),
+                quantity: data.quantity,
+                total: data.total
+            });
+        }
+    }
+
     // if there are no errors and all fields are filled, enable the save button
     useEffect(() => {
-        const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCabys === '' && error.price === '';
-        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCabys !== '' && data.price !== 0;
+        const noErrors = error.name === '' && error.description === '' && error.category === '' && error.codeCabys === '' && error.price === '' && error.descriptionCabys === '' && error.taxCabys === '';
+        const allFieldsFilled = data.name !== '' && data.description !== '' && data.category !== '' && data.codeCabys !== '' && data.price !== 0 && data.descriptionCabys === '' && data.taxCabys === 0;
         setIsBtnSaveActive(allFieldsFilled && noErrors);
     }, [error, data]);
 
     return {
         fields, 
+
+        cabysData, 
+
+        search, 
+        onChangeSearch,
         onChangeFields,
         saveProduct,
         redirect, 
-        isBtnSaveActive
+        isBtnSaveActive,
+        searchCabys
     }
 }

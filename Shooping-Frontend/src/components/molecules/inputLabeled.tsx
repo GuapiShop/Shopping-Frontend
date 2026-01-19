@@ -7,6 +7,7 @@ type InputLabeledProps = {
     inputPlaceHolder: string;
     inputValue: string | number;
     inputName: string;
+    disabled?: boolean; 
     inputOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     labelText: string;
     labelColor?: string;
@@ -18,6 +19,7 @@ const InputLabeled: React.FC<InputLabeledProps> = ({
     inputPlaceHolder, 
     inputValue, 
     inputName,
+    disabled = false, 
     inputOnChange, 
     labelText, 
     errorMessage
@@ -35,6 +37,7 @@ const InputLabeled: React.FC<InputLabeledProps> = ({
                     value={inputValue}
                     placeholder={inputPlaceHolder} 
                     onChange={inputOnChange}
+                    disabled={disabled}
                 /> 
                 <div className="flex justify-start"> 
                 {(errorMessage) && 
