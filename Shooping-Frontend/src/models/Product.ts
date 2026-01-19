@@ -3,17 +3,45 @@ export interface Product {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
-    quantity: number, 
-    price: number
+
+    codeCabys: string,
+    descriptionCabys: string, 
+    taxCabys: number,
+    price: number, 
+
+    isActive: boolean
 }
 
 export interface ProductCreateDTO {
     name: string, 
     description: string, 
     category: string, 
-    codeCABYS: string, 
-    quantity: number, 
+
+    codeCabys: string, 
+    descriptionCabys: string,
+    taxCabys: number,
     price: number
 }
 
+export interface ProductUpdateDTO {
+    id: number, 
+    name: string, 
+    description: string, 
+    category: string, 
+
+    codeCabys: string, 
+    descriptionCabys: string,
+    taxCabys: number, 
+    price: number
+}
+
+export interface ErrorProductDTO {
+    name: string, 
+    description: string, 
+    category: string, 
+
+    codeCabys: string, 
+    descriptionCabys: string,
+    taxCabys: string,
+    price: string
+}
