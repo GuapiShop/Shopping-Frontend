@@ -1,25 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
-import type { ErrorProductDTO, ProductCreateDTO } from "../models/product";
+import type { ErrorProductDTO, ProductCreateDTO } from "../models/Product";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
 import { createProduct } from "../services/productServices";
-import { getCabys } from "../services/cabysService"
 import { modalError, modalSuccess } from "../components/organisms/modalNotify";
 import { validateProductCodeCABYS, validateProductDescription, validateProductName } from "./validateFormProduct";
-import type { Cabys } from "../models/cabys";
 
 export const useFormProduct = () => {
     const navigate = useNavigate();
-    const [search, setSearch] = useState("");
-    const [selectedCabys, setSelectedCabys] = useState<string>("");
-
     const [isBtnSaveActive, setIsBtnSaveActive] = useState<boolean>(false);
-
-    const [cabysData, setCabysData] = useState<Cabys> ({
-        cabys: [],
-        quantity: 0,
-        total: 0
-    });
 
     const [data, setData] = useState<ProductCreateDTO> ({
         name: "",
@@ -80,17 +69,6 @@ export const useFormProduct = () => {
     ]
 
     const selectFields = [
-         {
-            label: "CABYS Code",
-            name: "codeCabys",
-            options: cabysData.cabys.map((cabys) => ({
-                value: cabys.code,
-                label: `${cabys.code} - ${cabys.description} - ${cabys.tax}%`
-            })),
-            placeholder: "Select a CABYS code",
-            value: selectedCabys,
-            error: error.codeCabys
-        } ,
         {
             label: "Category",
             name: "category",
@@ -155,28 +133,6 @@ export const useFormProduct = () => {
         }
     }
 
-    const onChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {        
-        const { name, value } = event.target; 
-        if (name==='search'){
-            setSearch(value);
-        }   
-    }
-
-    const searchCabys = async() => {
-        const data = await getCabys(search);
-        if (data && data.quantity > 0) {
-            setCabysData({
-                cabys: data.products.map((product:any) => ({
-                    code: product.codigo,
-                    description: product.descripcion,
-                    tax: product.impuesto
-                })),
-                quantity: data.quantity,
-                total: data.total
-            });
-        }
-    }
-
     const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = event.target; 
         fieldsValidations(name, value);
@@ -186,18 +142,7 @@ export const useFormProduct = () => {
                 ...prev,
                 category: value
             }));
-        } else if (name === "codeCabys") {
-            setSelectedCabys(value);
-            const selected = cabysData.cabys.find(cabys => cabys.code === value);
-            if (selected) {
-                setData((prev) => ({
-                    ...prev,
-                    codeCabys: selected.code,
-                    descriptionCabys: selected.description,
-                    taxCabys: selected.tax
-                }));
-            }
-        }
+        } 
     }
 
     // if there are no errors and all fields are filled, enable the save button
@@ -208,15 +153,13 @@ export const useFormProduct = () => {
     }, [error, data]);
 
     return {
-        fields, 
+        fields,
+        setData,
         selectFields, 
-        onChangeSelect,
-        search, 
-        onChangeSearch,
         onChangeFields,
+        onChangeSelect,
         saveProduct,
         redirect, 
-        isBtnSaveActive,
-        searchCabys
+        isBtnSaveActive, 
     }
 }

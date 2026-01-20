@@ -4,10 +4,10 @@ import Button from "../atoms/button";
 import SelectLabeled from "./selectLabeled";
 import { getCabys } from "../../services/cabysService";
 import type { Cabys } from "../../models/cabys";
-import type { ProductUpdateDTO } from "../../models/product";
+import type { ProductCreateDTO, ProductUpdateDTO } from "../../models/Product";
 
 type SearchCabysProps = {
-    setData: React.Dispatch<React.SetStateAction<ProductUpdateDTO>>;
+    setData: React.Dispatch<React.SetStateAction<ProductUpdateDTO|ProductCreateDTO>>;
 }
 
 const SearchCabys: React.FC<SearchCabysProps> = ({ 
@@ -75,7 +75,7 @@ const SearchCabys: React.FC<SearchCabysProps> = ({
             <SelectLabeled
                 name="codeCabys"
                 label="Code Cabys"
-                message="Cabys"
+                message="Select a product Cabys"
                 options={
                     cabysData.cabys.map((cabys) => ({
                         value: cabys.code,

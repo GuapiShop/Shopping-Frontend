@@ -1,34 +1,26 @@
 import React from "react";
 import Button from "../atoms/button";
-import Input from "../atoms/input";
 import InputLabeled from "../molecules/inputLabeled";
 import { useFormProduct } from "../../utils/useFormProduct";
-import Label from "../atoms/label";
 import SelectLabeled from "../molecules/selectLabeled";
 import SearchCabys from "../molecules/searchCabys";
 
 const FormProduct: React.FC = () => {
     const {
         fields,
+        setData, 
         selectFields, 
-        search, 
-        onChangeSearch, 
         onChangeFields,
         onChangeSelect,
         saveProduct,
         redirect, 
         isBtnSaveActive, 
-        searchCabys, 
     } = useFormProduct();
 
     return (
         <>
             <SearchCabys
-                name="search"
-                value={search}
-                placeholder="Enter the product to search for"
-                searchCabys={searchCabys}
-                onChangeSearch={onChangeSearch}
+                setData={setData}
             />
             
             {selectFields.map((field) => (

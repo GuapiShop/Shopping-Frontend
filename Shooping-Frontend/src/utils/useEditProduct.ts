@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ProductUpdateDTO, ErrorProductDTO } from "../models/product";
+import type { ProductUpdateDTO, ErrorProductDTO } from "../models/Product";
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
 import { updateProduct } from "../services/productServices";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
