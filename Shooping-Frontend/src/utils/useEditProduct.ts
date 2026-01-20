@@ -9,25 +9,33 @@ export const useEditProduct = (
     onUpdated: () => Promise<void>
 ) => {
     const [idEdit, setIdEdit] = useState<number|null>(null)
+
     const [editProduct, setProduct] = useState<ProductUpdateDTO> ({
         id:0, 
         name: "",
         description: "",  
         category: "", 
         codeCabys: "", 
+        descriptionCabys: "",
+        taxCabys: 0,
         price: 0
     })
+
     const [error, setError] = useState<ErrorProductDTO> ({ 
         name: "",
         description: "",  
         category: "", 
         codeCabys: "", 
         price: "",
+        descriptionCabys: "",
+        taxCabys: ""
     })
+
     const setEditProduct = (product:ProductUpdateDTO) => {
         setIdEdit(product.id); 
         setProduct(product);
     }
+
     const removeEditProduct = () => {
         setIdEdit(null)
         setProduct({
@@ -36,16 +44,21 @@ export const useEditProduct = (
             description: "",  
             category: "", 
             codeCabys: "", 
-            price: 0
+            price: 0, 
+            descriptionCabys: "",
+            taxCabys: 0
         })
         setError({
             name: "",
             description: "",  
             category: "", 
             codeCabys: "", 
-            price: ""
+            price: "", 
+            descriptionCabys: "",
+            taxCabys: ""
         })
     }
+
     const handleUpdateUser = async () => {
         const result = await updateProduct(editProduct);
         if (result.success) {
@@ -58,6 +71,7 @@ export const useEditProduct = (
             modalError("Error", "Error in server.")
         }
     }
+
     const fieldsValidations = ( name: string, value: string ) => {
         if (name === "name") {
             setError((prev) => ({
@@ -86,6 +100,7 @@ export const useEditProduct = (
             }))
         }
     } 
+
     const onChangeFields = (event:React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         fieldsValidations(name, value);
@@ -94,12 +109,26 @@ export const useEditProduct = (
             [name]: value
         }));
     }
+
+    const onChangeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const { name, value } = event.target;
+        fieldsValidations(name, value);
+        if (name === "category") {
+            setProduct((prev) => ({
+                ...prev,
+                category: value
+            }));
+        }
+    }
+
     return {
         idEdit, 
+        setProduct, 
         editProduct, 
         setEditProduct,
         removeEditProduct, 
         onChangeFields, 
+        onChangeSelect, 
         handleUpdateUser,
         error,
     };

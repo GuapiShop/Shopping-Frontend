@@ -8,11 +8,15 @@ import ErrorMessage from "../atoms/error";
 import ButtonSave from "../molecules/buttonSave";
 import ButtonCancel from "../molecules/buttonCancel";
 import ButtonEdit from "../molecules/buttonEdit";
+import SelectLabeled from "../molecules/selectLabeled";
+import SearchCabys from "../molecules/searchCabys";
+import Label from "../atoms/label";
 
 type TableProductProps = {
     arrayHeader: string[];
     arrayRows: Product[];
     idEdit: number | null;
+    setData: React.Dispatch<React.SetStateAction<ProductUpdateDTO>>;
     editProduct: ProductUpdateDTO;
     error: ErrorProductDTO;
     removeEditProduct: () => void;
@@ -21,12 +25,14 @@ type TableProductProps = {
     onDisable: (id: number) => Promise<ApiResponse>;
     onEnable: (id: number) => Promise<ApiResponse>;
     onChangeFields: (event:React.ChangeEvent<HTMLInputElement>) => void;
+    onChangeSelect: (event:React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const TableProduct: React.FC<TableProductProps> = ({
     arrayHeader,
     arrayRows, 
-    idEdit, 
+    idEdit,
+    setData, 
     editProduct, 
     error,
     removeEditProduct, 
@@ -35,6 +41,7 @@ const TableProduct: React.FC<TableProductProps> = ({
     onDisable,
     onEnable, 
     onChangeFields,
+    onChangeSelect
 }) => {
     return (
         <>
@@ -92,12 +99,27 @@ const TableProduct: React.FC<TableProductProps> = ({
                                         <div
                                             className="mb-4"
                                         >
-                                            <Input 
+                                            <SelectLabeled
+                                                key={editProduct.category}
                                                 name="category"
-                                                type="text"
-                                                onChange={onChangeFields}
+                                                label="Category"
+                                                message="Select a category"
+                                                options={
+                                                    [
+                                                        { value: "Electronics", label: "Electronics" },
+                                                        { value: "Clothing", label: "Clothing" },
+                                                        { value: "Books", label: "Books" },
+                                                        { value: "Home", label: "Home" },
+                                                        { value: "Sports", label: "Sports" },
+                                                        { value: "Toys", label: "Toys" },
+                                                        { value: "Beauty", label: "Beauty" },
+                                                        { value: "Automotive", label: "Automotive" },
+                                                        { value: "Grocery", label: "Grocery" },
+                                                        { value: "Health", label: "Health" },
+                                                    ]
+                                                }
                                                 value={editProduct.category}
-                                                placeholder="Category"
+                                                onChange={onChangeSelect}
                                             />
                                             {error.category && 
                                                 <ErrorMessage 
@@ -128,12 +150,22 @@ const TableProduct: React.FC<TableProductProps> = ({
                                         <div
                                             className="mb-4"
                                         >
-                                            <Input 
-                                                name="codeCABYS"
-                                                type="text"
-                                                onChange={onChangeFields}
+                                            <Label
+                                                text={editProduct.codeCabys}
+                                            />
+
+                                            <SearchCabys
+                                                setData={setData}
+                                            />
+
+                                            <SelectLabeled
+                                                key={editProduct.codeCabys}
+                                                name="codeCabys"
+                                                label="Code Cabys"
+                                                message="Cabys"
+                                                options={[]}
                                                 value={editProduct.codeCabys}
-                                                placeholder="Code CABYS"
+                                                onChange={onChangeSelect}
                                             />
                                             {error.codeCabys && 
                                                 <ErrorMessage 

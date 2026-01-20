@@ -3,7 +3,7 @@ export interface Product {
     name: string, 
     description: string, 
     category: string, 
-
+    
     codeCabys: string,
     descriptionCabys: string, 
     taxCabys: number,
@@ -28,11 +28,10 @@ export interface ProductUpdateDTO {
     name: string, 
     description: string, 
     category: string, 
-
+    price: number,
+    taxCabys: number,
     codeCabys: string, 
     descriptionCabys: string,
-    taxCabys: number, 
-    price: number
 }
 
 export interface ErrorProductDTO {

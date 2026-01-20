@@ -5,6 +5,7 @@ import InputLabeled from "../molecules/inputLabeled";
 import { useFormProduct } from "../../utils/useFormProduct";
 import Label from "../atoms/label";
 import SelectLabeled from "../molecules/selectLabeled";
+import SearchCabys from "../molecules/searchCabys";
 
 const FormProduct: React.FC = () => {
     const {
@@ -22,26 +23,14 @@ const FormProduct: React.FC = () => {
 
     return (
         <>
-            <div className="my-4">
-                <Label 
-                    text={"Search CABYS Product"} 
-                />
-                <div className="flex items-end space-x-4 mb-4">
-                    {/*input seeker*/}
-                    <Input 
-                        name="search"
-                        value={search}
-                        onChange={onChangeSearch}
-                        type="text"
-                        placeholder="Enter the product to search for"
-                    />
-                    <Button
-                        label="Search"
-                        onClick={searchCabys} 
-                    />
-                </div>
-            </div>
-
+            <SearchCabys
+                name="search"
+                value={search}
+                placeholder="Enter the product to search for"
+                searchCabys={searchCabys}
+                onChangeSearch={onChangeSearch}
+            />
+            
             {selectFields.map((field) => (
                 <SelectLabeled
                     key={field.name}
