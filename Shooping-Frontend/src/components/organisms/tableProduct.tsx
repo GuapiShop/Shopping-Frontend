@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Product, ProductUpdateDTO, ErrorProductDTO } from "../../models/Product";
+import type { Product, ProductUpdateDTO, ErrorProductDTO } from "../../models/product";
 import type { ApiResponse } from "../../models/ApiResponse";
 import ModalDisable from "./modalDisable";
 import ModalEnable from "./modalEnable";
@@ -174,6 +174,8 @@ const TableProduct: React.FC<TableProductProps> = ({
                                             }
                                         </div>
                                     </td>
+                                    <td className="px-2 py-2 text-lg">{product.descriptionCabys}</td>
+                                    <td className="px-2 py-2 text-lg">{product.taxCabys}</td>
                                     <td className="px-2 py-2 text-lg">{product.isActive ? "Yes" : "No"}</td>
                                     <td className="flex justify-center px-2 py-2 text-lg">
                                         <ButtonSave 
@@ -192,6 +194,8 @@ const TableProduct: React.FC<TableProductProps> = ({
                                     <td className="px-2 py-2 text-lg">{product.category}</td>
                                     <td className="px-2 py-2 text-lg">{product.price}</td>
                                     <td className="px-2 py-2 text-lg">{product.codeCabys}</td>
+                                    <td className="px-2 py-2 text-lg">{product.descriptionCabys}</td>
+                                    <td className="px-2 py-2 text-lg">{product.taxCabys}</td>
                                     <td className="px-2 py-2 text-lg">{product.isActive ? "Yes" : "No"}</td>
                                     <td className="flex justify-center px-2 py-2 text-lg">
                                         <ButtonEdit

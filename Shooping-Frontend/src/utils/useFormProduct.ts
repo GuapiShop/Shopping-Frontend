@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
-import type { ErrorProductDTO, ProductCreateDTO } from "../models/Product";
+import type { ErrorProductDTO, ProductCreateDTO } from "../models/product";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
 import { createProduct } from "../services/productServices";
 import { getCabys } from "../services/cabysService"

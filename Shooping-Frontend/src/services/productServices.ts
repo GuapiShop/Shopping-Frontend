@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Product, ProductCreateDTO, ProductUpdateDTO } from "../models/Product";
+import type { Product, ProductCreateDTO, ProductUpdateDTO } from "../models/product";
 import { authHeathers } from "./authService";
 import { handleAxiosError, handleAxiosErrorPaginated } from "./errorsHandler";
 import type { ApiResponse, ApiPaginated } from "../models/ApiResponse";

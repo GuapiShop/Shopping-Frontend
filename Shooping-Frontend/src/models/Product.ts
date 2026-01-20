@@ -3,12 +3,10 @@ export interface Product {
     name: string, 
     description: string, 
     category: string, 
-    
     codeCabys: string,
     descriptionCabys: string, 
     taxCabys: number,
     price: number, 
-
     isActive: boolean
 }
 

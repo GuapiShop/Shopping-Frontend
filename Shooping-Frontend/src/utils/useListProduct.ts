@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Product } from "../models/Product";
+import type { Product } from "../models/product";
 import { enableProduct, getAllProducts } from "../services/productServices"
 import { disableProduct } from "../services/productServices"
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
@@ -15,16 +15,19 @@ export const useListProduct = () => {
 
     const header = [
         "Name", 
-        "Description", 
+        "Description",
         "Category", 
         "Price", 
-        "Code",
+        "Description Cabys",
+        "Code Cabys",
+        "Tax Cabys",
         "Is Active", 
         "Actions"
     ]
 
     const fetchProducts = useCallback(async() => {
         const data = await getAllProducts(page, pageSize);
+        console.log(data);
         if(data.success){
             setRow(data.data)
             setTotalPage(data.totalPage)
