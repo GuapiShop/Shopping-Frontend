@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Product } from "../models/product";
+import type { Product } from "../models/Product";
 import { enableProduct, getAllProducts } from "../services/productServices"
 import { disableProduct } from "../services/productServices"
 import { modalError, modalSuccess, modalWarning } from "../components/organisms/modalNotify";
@@ -18,8 +18,8 @@ export const useListProduct = () => {
         "Description",
         "Category", 
         "Price", 
-        "Description Cabys",
         "Code Cabys",
+        "Description Cabys",
         "Tax Cabys",
         "Is Active", 
         "Actions"

@@ -14,15 +14,14 @@ export interface ProductCreateDTO {
     name: string, 
     description: string, 
     category: string, 
-
+    price: number
     codeCabys: string, 
     descriptionCabys: string,
     taxCabys: number,
-    price: number
 }
 
 export interface ProductUpdateDTO {
-    id: number, 
+    id?: number, 
     name: string, 
     description: string, 
     category: string, 
