@@ -158,15 +158,6 @@ const TableProduct: React.FC<TableProductProps> = ({
                                                 setData={setData}
                                             />
 
-                                            <SelectLabeled
-                                                key={editProduct.codeCabys}
-                                                name="codeCabys"
-                                                label="Code Cabys"
-                                                message="Cabys"
-                                                options={[]}
-                                                value={editProduct.codeCabys}
-                                                onChange={onChangeSelect}
-                                            />
                                             {error.codeCabys && 
                                                 <ErrorMessage 
                                                     message={error.codeCabys}

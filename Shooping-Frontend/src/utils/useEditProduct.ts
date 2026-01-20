@@ -32,7 +32,7 @@ export const useEditProduct = (
     })
 
     const setEditProduct = (product:ProductUpdateDTO) => {
-        setIdEdit(product.id); 
+        setIdEdit(product.id || null); 
         setProduct(product);
     }
 
