@@ -34,7 +34,6 @@ export async function updateProduct (product:ProductUpdateDTO) : Promise<ApiResp
         const result = await axios.put(apiProduct +`/${product.id}`, product, {
            headers: authHeathers()
         });
-
         return {
             data: result.data,
             success: true, 

@@ -11,7 +11,7 @@ const ButtonCancel: React.FC<ButtonCancelProps>= ({
     return (
         <div className="px-2 py-2">
             <button 
-                title="Save"
+                title="Cancel"
                 className="py-2 px-4 rounded-full disabled:opacity-70 disabled:cursor-not-allowed hover:cursor-pointer bg-[#eb354c] hover:bg-[#e91e39]"
                 onClick={onCancel}
             >

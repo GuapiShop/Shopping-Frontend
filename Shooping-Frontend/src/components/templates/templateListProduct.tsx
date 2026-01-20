@@ -23,10 +23,12 @@ const TemplateListProduct: React.FC = () => {
 
     const {
         idEdit, 
+        setProduct, 
         editProduct, 
         setEditProduct,
         removeEditProduct, 
         onChangeFields, 
+        onChangeSelect, 
         handleUpdateUser,
         error,
     } = useEditProduct(fetchProducts);
@@ -52,6 +54,7 @@ const TemplateListProduct: React.FC = () => {
                             arrayHeader={header}
                             arrayRows={row}
                             idEdit={idEdit}
+                            setData={setProduct}
                             editProduct={editProduct}
                             error={error}
                             setEditProduct={setEditProduct}
@@ -60,6 +63,7 @@ const TemplateListProduct: React.FC = () => {
                             onDisable={disable}
                             onEnable={enable}
                             onChangeFields={onChangeFields}
+                            onChangeSelect={onChangeSelect}
                         />
                         <Pagination 
                             page={page}
