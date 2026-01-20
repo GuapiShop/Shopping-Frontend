@@ -4,7 +4,7 @@ import Button from "../atoms/button";
 import SelectLabeled from "./selectLabeled";
 import { getCabys } from "../../services/cabysService";
 import type { Cabys } from "../../models/cabys";
-import type { ProductUpdateDTO } from "../../models/Product";
+import type { ProductUpdateDTO } from "../../models/product";
 
 type SearchCabysProps = {
     setData: React.Dispatch<React.SetStateAction<ProductUpdateDTO>>;

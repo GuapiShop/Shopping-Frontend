@@ -3,7 +3,7 @@ import TempEditProduct from "../templates/templateEditProduct";
 import { getProduct } from "../../services/productServices";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import type { Product } from "../../models/Product";
+import type { Product } from "../../models/product";
 
 
 const EditProductPage: React.FC = () => {

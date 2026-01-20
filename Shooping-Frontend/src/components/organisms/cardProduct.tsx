@@ -1,6 +1,6 @@
 import React from "react"
 import Button from "../atoms/button";
-import type { Product } from "../../models/Product";
+import type { Product } from "../../models/product";
 import { deleteProduct } from "../../services/productServices";
 import { useNavigate } from "react-router-dom";
 import HeadingTwo from "../atoms/headingTwo";
