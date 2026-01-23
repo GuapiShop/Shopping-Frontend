@@ -41,3 +41,11 @@ export interface ErrorProductDTO {
     taxCabys: string,
     price: string
 }
+
+export interface ProductShowDTO {
+    id: number, 
+    name: string, 
+    description: string, 
+    category: string, 
+    price: number
+}

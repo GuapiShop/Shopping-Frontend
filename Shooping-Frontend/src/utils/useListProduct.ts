@@ -27,7 +27,6 @@ export const useListProduct = () => {
 
     const fetchProducts = useCallback(async() => {
         const data = await getAllProducts(page, pageSize);
-        console.log(data);
         if(data.success){
             setRow(data.data)
             setTotalPage(data.totalPage)
