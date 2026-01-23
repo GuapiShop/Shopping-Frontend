@@ -4,7 +4,7 @@ import { authHeathers } from "./authService";
 import { handleAxiosError, handleAxiosErrorPaginated } from "./errorsHandler";
 import type { ApiResponse, ApiPaginated } from "../models/ApiResponse";
 
-const apiProduct = "https://localhost:7176/api/Products";
+const apiProduct = `${import.meta.env.URL_APP}/Products`;
 
 /*
 * endpoint create a product
@@ -119,5 +119,26 @@ export async function getProduct(id:number) : Promise<ApiResponse<Product>> {
         }
     } catch (error) {
         return handleAxiosError(error);
+    }
+}
+
+/*
+* endpoint get a single product
+* GET: /api/Products/show
+*/
+export async function getShowProduct(page:number, pageSize:number) : Promise<ApiPaginated<Product[]>>{
+    try {
+        const result = await axios.get(apiProduct +`show?page=${page}&pageSize=${pageSize}`, {
+            headers: authHeathers()
+        });
+        return { 
+            page: result.data.page,
+            totalPage: result.data.totalPage,
+            data: result.data.data,
+            success: true, 
+            status: result.status,
+        }
+    } catch (error) {
+        return handleAxiosErrorPaginated(error);
     }
 }
