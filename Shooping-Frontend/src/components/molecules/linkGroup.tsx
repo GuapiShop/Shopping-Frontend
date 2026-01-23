@@ -16,6 +16,7 @@ const LinkGroup: React.FC = () => {
         ) : (
           // customers links
           <>
+            <LinkHeader label="Sports" link="/products?p=Sports" />
           </>
         )}
     </div>

@@ -2,18 +2,22 @@ import React from "react";
 import { useShowProduct } from "../../utils/useShowProduct";
 import Pagination from "../molecules/pagination";
 import CatalogProduct from "../organisms/catalogProduct";
+import { useSearchParams } from "react-router-dom";
 
 type TemplateShowProductProps = {
 }
 
 const TemplateShowProduct: React.FC<TemplateShowProductProps> = () => {
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get("p");
+
     const {
         row, 
         page, 
         totalPage,
         changePreviousPage, 
         changeNextPage
-    } = useShowProduct();
+    } = useShowProduct(category);
 
     return (
         <>
