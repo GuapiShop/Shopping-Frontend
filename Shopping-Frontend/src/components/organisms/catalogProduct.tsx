@@ -10,7 +10,7 @@ const CatalogProduct: React.FC<CatalogProductProps> = ({
     products
 }) => {
     return(
-        <div>
+        <div className="grid grid-cols-5">
             {products.map((product) => (
                 <CardProduct
                     key={product.id}
