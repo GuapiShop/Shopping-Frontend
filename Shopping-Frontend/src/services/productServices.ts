@@ -131,7 +131,6 @@ export async function getShowProduct(page:number, pageSize:number, category?:str
         const result = await axios.get(apiProduct +`/show?page=${page}&pageSize=${pageSize}&category=${category}`, {
             headers: authHeathers()
         });
-        console.log("No ",result);
         return { 
             page: result.data.page,
             totalPage: result.data.totalPage,
