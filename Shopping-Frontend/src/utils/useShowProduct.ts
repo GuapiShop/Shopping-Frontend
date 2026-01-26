@@ -29,7 +29,7 @@ export const useShowProduct = (
     }
 
     const redirect = () => {
-        navigate('/product/add');
+        navigate('');
     }
 
     useEffect(() => {
