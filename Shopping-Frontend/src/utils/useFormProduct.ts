@@ -4,7 +4,7 @@ import type { ErrorProductDTO, ProductCreateDTO } from "../models/Product";
 import { validateEmptyField, validateOnlyNumbers, validateNumberLessZero } from "./generalValidations";
 import { createProduct } from "../services/productServices";
 import { modalError, modalSuccess } from "../components/organisms/modalNotify";
-import { validateProductCodeCABYS, validateProductDescription, validateProductName } from "./validateFormProduct";
+import { validateProductDescription, validateProductName } from "./validateFormProduct";
 
 export const useFormProduct = () => {
     const navigate = useNavigate();

@@ -1,9 +1,9 @@
 import React from "react"
-import type { ProductShowDTO } from "../../models/Product";
+import type { ProductResponseDTO } from "../../models/Product";
 import { useNavigate } from "react-router-dom";
 
 type CardProductProps = {
-    product: ProductShowDTO
+    product: ProductResponseDTO
 }
 
 const CardProduct: React.FC<CardProductProps> = ({

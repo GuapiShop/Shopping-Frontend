@@ -1,13 +1,13 @@
 import React from "react";
-import { useShowProduct } from "../../utils/useShowProduct";
+import { useCatalogProduct } from "../../utils/useCatalogProduct";
 import Pagination from "../molecules/pagination";
 import CatalogProduct from "../organisms/catalogProduct";
 import { useSearchParams } from "react-router-dom";
 
-type TemplateShowProductProps = {
+type TemplateCatalogProductProps = {
 }
 
-const TemplateShowProduct: React.FC<TemplateShowProductProps> = () => {
+const TemplateCatalogProduct: React.FC<TemplateCatalogProductProps> = () => {
     const [searchParams] = useSearchParams();
     const category = searchParams.get("p");
 
@@ -17,7 +17,7 @@ const TemplateShowProduct: React.FC<TemplateShowProductProps> = () => {
         totalPage,
         changePreviousPage, 
         changeNextPage
-    } = useShowProduct(category);
+    } = useCatalogProduct(category);
 
     return (
         <>
@@ -50,4 +50,4 @@ const TemplateShowProduct: React.FC<TemplateShowProductProps> = () => {
     );
 }
 
-export default TemplateShowProduct; 
+export default TemplateCatalogProduct; 

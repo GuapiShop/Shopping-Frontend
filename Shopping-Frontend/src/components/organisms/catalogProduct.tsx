@@ -1,9 +1,9 @@
 import React from "react";
 import CardProduct from "./cardProduct";
-import type { ProductShowDTO } from "../../models/Product";
+import type { ProductResponseDTO } from "../../models/Product";
 
 type CatalogProductProps = {
-    products: ProductShowDTO[];
+    products: ProductResponseDTO[];
 }
 
 const CatalogProduct: React.FC<CatalogProductProps> = ({
