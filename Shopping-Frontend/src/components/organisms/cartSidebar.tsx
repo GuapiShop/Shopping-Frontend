@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import type { Cart } from "../../models/order";
+import { useShoppingCart } from "../../utils/useShoppingCart";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -10,11 +11,12 @@ interface CartSidebarProps {
 const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
 
     const [cart, setCart] = useState<Cart[]>([]);
+    const { getCart } = useShoppingCart();
 
     useEffect(() => {
-        const products = localStorage.getItem('cart');
+        const products = getCart();
         if (products) {
-            setCart(JSON.parse(products));
+            setCart(products);
         } else {
             setCart([]);
         }
