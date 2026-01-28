@@ -31,21 +31,20 @@ export interface ProductUpdateDTO {
     descriptionCabys: string,
 }
 
-export interface ErrorProductDTO {
-    name: string, 
-    description: string, 
-    category: string, 
-
-    codeCabys: string, 
-    descriptionCabys: string,
-    taxCabys: string,
-    price: string
-}
-
-export interface ProductShowDTO {
+export interface ProductResponseDTO {
     id: number, 
     name: string, 
     description: string, 
     category: string, 
     price: number
+}
+
+export interface ErrorProductDTO {
+    name: string, 
+    description: string, 
+    category: string, 
+    codeCabys: string, 
+    descriptionCabys: string,
+    taxCabys: string,
+    price: string
 }

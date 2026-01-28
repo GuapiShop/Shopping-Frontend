@@ -7,7 +7,7 @@ import ListProduct from './components/pages/listProduct'
 import AddUserPage from './components/pages/AddUserPage'
 import ListUsersPage from './components/pages/ListUsersPage'
 import MainPage from './components/pages/mainPage'
-import ShowProduct from './components/pages/showProduct'
+import CatalogProductPage from './components/pages/catalogProduct'
 import InformationProductPage from './components/pages/informationProductPage'
 
 /*
@@ -27,7 +27,7 @@ function App() {
           <Route path='product/add' element={<AddProductPage />}/>
           <Route path='user/add' element={<AddUserPage />} />
           <Route path='user/' element={<ListUsersPage />} />
-          <Route path='products/' element={<ShowProduct />}/>
+          <Route path='products/' element={<CatalogProductPage />}/>
           <Route path='product/show/view/:id' element={<InformationProductPage />}/>
         </Routes>
       </BrowserRouter>

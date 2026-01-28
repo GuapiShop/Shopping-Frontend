@@ -1,17 +1,17 @@
 import React from "react";
 import TemplateErrorPage from "../templates/templateErrorPage";
-import TemplateShowProduct from "../templates/templateShowProduct";
+import TemplateCatalogProduct from "../templates/templateCatalogProduct";
 import MainHeader from "../organisms/mainHeader";
 
-type ShowProductProps = {
+type CatalogProductProps = {
 }
 
-const ShowProduct: React.FC<ShowProductProps>  = () => {
+const CatalogProductPage: React.FC<CatalogProductProps>  = () => {
     return (
         localStorage.getItem("token") ? (
             <>  
                 <MainHeader />
-                <TemplateShowProduct />
+                <TemplateCatalogProduct />
             </>
         ) : (
             <>
@@ -24,4 +24,4 @@ const ShowProduct: React.FC<ShowProductProps>  = () => {
     );
 }
 
-export default ShowProduct;
+export default CatalogProductPage;
