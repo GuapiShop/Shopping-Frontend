@@ -45,7 +45,7 @@ export const useEditUsers = (
         if (result.success) {
             await onUpdated();
             removeEditUser();
-            modalSuccess("Disabled", "User updated successfully.")
+            modalSuccess("Updated", "User updated successfully.")
         } else if (result.status===404){
             modalWarning("Warning", result.message)
         } else {
