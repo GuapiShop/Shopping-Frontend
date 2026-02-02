@@ -5,8 +5,8 @@ import type { ProductResponseDTO } from "../models/Product";
 export const useShoppingCart = () => {
     const CART_KEY = "cart";
 
-    // add a single product into the cart
-    const addSingleToCart = (product: ProductResponseDTO) => {
+    // add products to the shopping cart
+    const addProductToCart = (product: ProductResponseDTO, quantity = 1) => {
         const storedCart = localStorage.getItem(CART_KEY);
 
         let cart: Cart[] = storedCart ? (JSON.parse(storedCart) as Cart[]) : [];
@@ -22,15 +22,11 @@ export const useShoppingCart = () => {
                 productId: product.id,
                 productName:product.name, 
                 productPrice: product.price, 
-                productQuantity: 1,
+                productQuantity: quantity,
             });
         }
         modalSuccess('Product added', 'Product added to shopping cart');
         localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    };
-
-    // add many products into the cart
-    const addToCart = () => {
     };
 
     // get products of the cart
@@ -41,7 +37,6 @@ export const useShoppingCart = () => {
 
     return {
         getCart,
-        addSingleToCart,
-        addToCart,
+        addProductToCart,
     }
 }

@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { useInformationProduct } from "../../utils/useInformationProduct";
+import { useShoppingCart } from "../../utils/useShoppingCart";
+import Button from "../atoms/button";
+import type { ProductResponseDTO } from "../../models/Product";
 
 const TemplateInformationProduct: React.FC = () => {
+
+    const [visible, setVisible] = useState<boolean>(false);
+    const [quantity, setQuantity] = useState<number>(1); 
+
     const {
         product
     } = useInformationProduct();
+
+    const {
+        addProductToCart
+    } = useShoppingCart();
+
+    const handleAddToCart = () => {
+        if (!product) return;
+
+        const productDto: ProductResponseDTO = {
+            id: product.id,
+            name: product.name,
+            category: product.category,
+            description: product.description,
+            price: product.price
+        };
+
+        addProductToCart(productDto, quantity);
+    };
+
+    const onChangeNumberQuantity = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value }  = event.target;
+        if (isNaN(Number(value))) {
+            return;
+        }
+        if (Number(value) > 0 && Number(value) < 1000) {
+            setQuantity(Number(value));
+        }
+    }
 
     return(
         <div
@@ -41,6 +76,21 @@ const TemplateInformationProduct: React.FC = () => {
                             <div className="text-2xl mb-2">
                                 {product?.description}
                             </div>  
+                        </div>
+                        <div className="flex gap-2">
+                            <div className="font-bold text-2xl mb-2 pr-4">
+                                Quantity: 
+                            </div>
+                            <input 
+                                className="bg-gray-200 p-2 rounded-2xl"
+                                type="number" 
+                                value={quantity} 
+                                onChange={onChangeNumberQuantity}
+                            />
+                            <Button
+                                label= {"Add to Cart"}
+                                onClick={()=> handleAddToCart()}
+                            />  
                         </div>
                     </div>
                 </div>
