@@ -7,7 +7,8 @@ export interface Product {
     descriptionCabys: string, 
     taxCabys: number,
     price: number, 
-    isActive: boolean
+    isActive: boolean, 
+    quantity:number
 }
 
 export interface ProductCreateDTO {
@@ -36,7 +37,8 @@ export interface ProductResponseDTO {
     name: string, 
     description: string, 
     category: string, 
-    price: number
+    price: number, 
+    quantity: number,
 }
 
 export interface ErrorProductDTO {

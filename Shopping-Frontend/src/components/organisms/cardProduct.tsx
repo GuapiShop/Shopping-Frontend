@@ -14,6 +14,7 @@ const CardProduct: React.FC<CardProductProps> = ({
     const [visible, setVisible] = useState<boolean>(false);
     const [quantity, setQuantity] = useState<number>(1); 
     const navigate = useNavigate();
+    const isOutOfStock = product.quantity <= 0; //verify if the product is out of stock
 
     const navigateInformation = async( id: number ) => {
         navigate('/product/show/view/'+id);
@@ -36,11 +37,15 @@ const CardProduct: React.FC<CardProductProps> = ({
     return (
         <>
             <div 
-                className="max-w-sm rounded-4xl overflow-hidden shadow-lg m-5"
+                className={`max-w-sm rounded-4xl overflow-hidden shadow-lg m-5 ${isOutOfStock?'opacity-50':''}`}
             >   
                 <div
-                    className="hover:cursor-pointer"
-                    onClick={() => navigateInformation(product.id)}
+                    className={`hover:${!isOutOfStock ?'cursor-pointer':'cursor-not-allowed'}`}
+                    onClick={() => {
+                        if(!isOutOfStock){
+                            navigateInformation(product.id)
+                        }   
+                    }}
                 >
                     <img className="w-full" src="/guapishop.png" alt={product.name}></img>
                     <div className="px-4 pt-4">
@@ -57,8 +62,7 @@ const CardProduct: React.FC<CardProductProps> = ({
                     <div
                         className="p-2 grid-rows-2 "
                     >
-
-                        {visible == true && (
+                        {!isOutOfStock && visible == true && (
                             <div className="py-2">
                                 <input 
                                     className="bg-gray-200 p-2 rounded-2xl"
@@ -70,15 +74,17 @@ const CardProduct: React.FC<CardProductProps> = ({
                         )}
                         <div className="flex gap-2 justify-center">
                             <Button
-                                label= {visible ? "Add" : "Add to Cart"}
+                                label={isOutOfStock ? "Out Stock" : visible ? "Add" : "Add to Cart"}
                                 onClick={()=> {
+                                    if (isOutOfStock) return;
+
                                     if(visible){
                                         addProductToCart(product, quantity);
                                     }
                                     setVisible(!visible);
                                 }}
                             />  
-                            {visible == true && (
+                            {!isOutOfStock && visible == true && (
                                 <Button
                                     label= "Cancel"
                                     onClick={()=> {

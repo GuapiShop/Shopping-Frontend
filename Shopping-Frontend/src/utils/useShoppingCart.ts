@@ -1,6 +1,7 @@
 import { modalSuccess } from "../components/organisms/modalNotify";
-import type { Cart } from "../models/order";
+import type { Cart, DetailCreateDTO } from "../models/order";
 import type { ProductResponseDTO } from "../models/Product";
+import { createDetail } from "../services/detailsService";
 
 export const useShoppingCart = () => {
     const CART_KEY = "cart";
@@ -35,8 +36,34 @@ export const useShoppingCart = () => {
         return storedCart ? (JSON.parse(storedCart) as Cart[]) : [];
     };
 
+    // generate invoice to pay
+    const onClickToGenerateInvoice = async () => {
+        const products = getCart();
+
+        if (products.length === 0) {
+            return;
+        }
+
+        const details: DetailCreateDTO[] = products.map(product => ({
+            productId: product.productId,
+            quantity: product.productQuantity,
+        }));
+
+        try {
+            const response = await createDetail(details);
+
+            if (response.success) {
+                modalSuccess("Invoice created", "Your invoice was generated successfully");
+                localStorage.removeItem(CART_KEY);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return {
         getCart,
         addProductToCart,
+        onClickToGenerateInvoice, 
     }
 }

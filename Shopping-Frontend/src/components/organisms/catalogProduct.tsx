@@ -15,7 +15,7 @@ const CatalogProduct: React.FC<CatalogProductProps> = ({
                 <CardProduct
                     key={product.id}
                     product={product}
-                />
+                /> 
             ))}
         </div>
     );
