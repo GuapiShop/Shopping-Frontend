@@ -6,16 +6,9 @@ import type { ProductResponseDTO } from "../../models/Product";
 
 const TemplateInformationProduct: React.FC = () => {
 
-    const [visible, setVisible] = useState<boolean>(false);
     const [quantity, setQuantity] = useState<number>(1); 
-
-    const {
-        product
-    } = useInformationProduct();
-
-    const {
-        addProductToCart
-    } = useShoppingCart();
+    const { product } = useInformationProduct();
+    const { addProductToCart } = useShoppingCart();
 
     const handleAddToCart = () => {
         if (!product) return;
@@ -25,7 +18,8 @@ const TemplateInformationProduct: React.FC = () => {
             name: product.name,
             category: product.category,
             description: product.description,
-            price: product.price
+            price: product.price, 
+            quantity: product.quantity
         };
 
         addProductToCart(productDto, quantity);

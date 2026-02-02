@@ -11,7 +11,7 @@ interface CartSidebarProps {
 const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
 
     const [cart, setCart] = useState<Cart[]>([]);
-    const { getCart } = useShoppingCart();
+    const { getCart, onClickToGenerateInvoice } = useShoppingCart();
 
     useEffect(() => {
         const products = getCart();
@@ -65,7 +65,10 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
             </div>
 
             <div className="p-4">
-                <button className="w-full bg-[#eb354c] text-white py-2 hover:cursor-pointer rounded">
+                <button 
+                    className="w-full bg-[#eb354c] text-white py-2 hover:cursor-pointer rounded"
+                    onClick={onClickToGenerateInvoice}
+                >
                     Go to Pay
                 </button>
             </div>
