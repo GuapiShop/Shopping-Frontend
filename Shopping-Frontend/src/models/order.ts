@@ -9,3 +9,10 @@ export interface DetailCreateDTO {
     productId: number,
     quantity: number, 
 }
+
+export interface Orders {
+    id: number,
+    state: string, 
+    createAt: string, 
+    userId: number,
+}

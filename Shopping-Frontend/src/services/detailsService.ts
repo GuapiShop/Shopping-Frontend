@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { ApiResponse } from "../models/ApiResponse";
-import type { DetailCreateDTO } from "../models/order";
+import type { DetailCreateDTO, Orders } from "../models/order";
 import { authHeathers } from "./authService";
 import { handleAxiosError } from "./errorsHandler";
 
@@ -10,7 +10,7 @@ const apiDetails = `${import.meta.env.VITE_URL_APP}/details`;
 * endpoint create a order detail
 * POST: /api/details
 */
-export async function createDetail (detail: DetailCreateDTO[] ) : Promise<ApiResponse<DetailCreateDTO>> {
+export async function createDetail (detail: DetailCreateDTO[] ) : Promise<ApiResponse<Orders>> {
     try {
         const result = await axios.post(apiDetails, detail, {
             headers: authHeathers()
