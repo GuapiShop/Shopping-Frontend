@@ -50,6 +50,7 @@ export const useShoppingCart = () => {
         }));
 
         try {
+            
             const response = await createDetail(details);
 
             if (response.success) {
