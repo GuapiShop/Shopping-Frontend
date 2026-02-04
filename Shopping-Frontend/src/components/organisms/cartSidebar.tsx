@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import type { Cart } from "../../models/order";
 import { useShoppingCart } from "../../utils/useShoppingCart";
+import { useNavigate } from "react-router-dom";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -11,7 +12,13 @@ interface CartSidebarProps {
 const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
 
     const [cart, setCart] = useState<Cart[]>([]);
-    const { getCart, onClickToGenerateInvoice } = useShoppingCart();
+    const { getCart } = useShoppingCart();
+    const navigate = useNavigate();
+
+    const navigateToPaymentDetail = () => {
+        navigate("/payment-detail");
+        onClose();
+    }
 
     useEffect(() => {
         const products = getCart();
@@ -67,9 +74,9 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
             <div className="p-4">
                 <button 
                     className="w-full bg-[#eb354c] text-white py-2 hover:cursor-pointer rounded"
-                    onClick={onClickToGenerateInvoice}
+                    onClick={navigateToPaymentDetail}
                 >
-                    Go to Pay
+                    Generate Order
                 </button>
             </div>
         </div>
